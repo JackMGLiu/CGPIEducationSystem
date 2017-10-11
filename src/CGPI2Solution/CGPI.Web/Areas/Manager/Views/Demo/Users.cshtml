@@ -86,9 +86,17 @@
             <form class="layui-form" action="" lay-filter="form-edit">
                 <input type="hidden" name="id" value="{{d.user.id}}" />
                 <div class="layui-form-item">
-                    <label class="layui-form-label">用户名</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="username" required lay-verify="required" value="{{d.user.username}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                    <div class="layui-inline">
+                        <label class="layui-form-label label-required">用户名：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="username" required lay-verify="required" value="{{d.user.username}}" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label label-required">真实姓名：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="realname" required lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                        </div>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -252,6 +260,7 @@
 
                 var editIndex;
                 form.on('submit(formEdit)', function (data) {
+                    console.log(data);
                     layer.msg('formEdit');
                     editIndex && layer.close(editIndex); //关闭弹出层
                     return false;
@@ -265,7 +274,6 @@
                             case 'add':
                                 var d = {
                                     user: {
-                                        sign: '',
                                         city: '',
                                         classify: '',
                                         experience: '',
@@ -287,7 +295,7 @@
                                             type: 1,
                                             title: '表单',
                                             content: html,
-                                            area: ['800px', '600px'],
+                                            area: ['80%', '85%'],
                                             btn: ['提交', '重置', '取消'],
                                             yes: function (index, layero) {
                                                 editIndex = index;
