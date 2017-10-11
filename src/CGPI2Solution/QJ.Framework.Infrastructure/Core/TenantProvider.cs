@@ -1,7 +1,6 @@
 ﻿using System;
-using QJ.Framework.Infrastructure.Core;
 
-namespace QJ.Framework.Infrastructure
+namespace QJ.Framework.Infrastructure.Core
 {
     public class TenantProvider: ITenantProvider
     {
