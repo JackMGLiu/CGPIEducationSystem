@@ -94,7 +94,7 @@ layui.define(['element', 'nprogress', 'form', 'table', 'loader', 'tab', 'navbar'
                 //navbar加载方式二，设置远程地址加载
                  navbar.set({
                      remote: {
-                         url: '/datas/navbar1.json'
+                         url: '/demo/menus'
                      }
                  }).render(function(data) {
                      tab.tabAdd(data);

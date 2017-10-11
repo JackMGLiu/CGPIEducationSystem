@@ -16,8 +16,8 @@
                              (i
                                  .html(e), "function" == typeof o.onSuccess && o.onSuccess({ name: r, id: t })),
                              "function" == typeof o.onComplate && o.onComplate(), NProgress.done();
-                     })
+                     });
              },
              getScript: function(o, n) { e.getScript(o, n) }
-         })
+         });
      });
