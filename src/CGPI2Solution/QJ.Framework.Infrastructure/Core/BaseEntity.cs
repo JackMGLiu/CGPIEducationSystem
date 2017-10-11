@@ -11,7 +11,7 @@ namespace QJ.Framework.Infrastructure.Core
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required, Column("Guid"),MaxLength(36)]
+        [Required, Column("Guid"), MaxLength(36)]
         public string GuidCode { get; set; }
 
         /// <summary>

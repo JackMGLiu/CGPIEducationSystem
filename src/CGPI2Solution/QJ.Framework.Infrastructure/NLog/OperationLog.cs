@@ -1,7 +1,7 @@
 ﻿using System;
 using NLog;
 
-namespace MG.Infrastructure.NLog
+namespace QJ.Framework.Infrastructure.NLog
 {
     public class SysLogger
     {
