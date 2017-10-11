@@ -20,6 +20,11 @@ namespace QJ.Framework.Service.Impl
         {
             try
             {
+                model.GuidCode=Guid.NewGuid().ToString("N");
+                model.IsEnableed = true;
+                model.IsDeleted = false;
+                model.CreateTime=DateTime.Now;
+                model.CreateUser = "testmanager";
                 _sysuseRepository.Insert(model);
                 bool res = _unitOfWork.SaveChanges() > 0;
                 return res;

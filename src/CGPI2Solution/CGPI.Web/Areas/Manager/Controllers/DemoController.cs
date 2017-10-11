@@ -38,8 +38,8 @@ namespace CGPI.Web.Areas.Manager.Controllers
         [HttpPost("demo/addusers")]
         public IActionResult AddUsers(SysUser model)
         {
-            var res = _sysUserService.AddUser(model);
-            return Json(res);
+            //var res = _sysUserService.AddUser(model);
+            return Json("true");
         }
 
         [HttpGet("demo/count")]
