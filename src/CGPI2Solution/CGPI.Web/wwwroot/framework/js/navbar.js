@@ -52,7 +52,7 @@ layui.define(["layer", "laytpl", "element"],
                                         url: t.data("url")
                                     };
                                 "function" == typeof i && i(e);
-                            })
+                            });
                     }), e(".kit-side-fold").off("click").on("click",
                     function() {
                         var i = t.find("div.kit-side");
