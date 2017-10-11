@@ -9,7 +9,7 @@
              l = e(window),
              r = { page: "page", iframe: "iframe" },
              c = function() {
-                 this.config = { elem: void 0, mainUrl: "main.html", renderType: "iframe", openWait: !0 }, this
+                 this.config = { elem: void 0, mainUrl: "/default/main", renderType: "iframe", openWait: !0 }, this
                      .v = "1.0.5";
              };
          (c.fn = c.prototype).set = function(t) {
@@ -31,7 +31,8 @@
              tabDomExists: function() {
                  var t = this;
                  return n.find("div.kit-tab").length > 0 &&
-                     (t._title = e(".kit-tab ul.layui-tab-title"), t._content = e(".kit-tab div.layui-tab-content"), !0)
+                 (t._title = e(".kit-tab ul.layui-tab-title"), t
+                     ._content = e(".kit-tab div.layui-tab-content"), !0);
              },
              createTabDom: function() {
                  var t = this, i = t._config;
@@ -96,7 +97,7 @@
                                      }), t.tabChange(-1);
                                  }
                                  n.click();
-                             })
+                             });
                      }), t.winResize();
                  }
              },

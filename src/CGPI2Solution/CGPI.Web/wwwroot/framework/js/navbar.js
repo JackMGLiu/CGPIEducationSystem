@@ -109,5 +109,5 @@ layui.define(["layer", "laytpl", "element"],
                     50);
                 return t;
             }
-        })
+        });
     });

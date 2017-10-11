@@ -30,6 +30,10 @@ namespace QJ.Framework.Entity.DbContext
             modelBuilder.Entity<SysDictDetail>().ToTable("SysDictDetail");
             modelBuilder.Entity<SysLog>().ToTable("SysLog");
 
+            //org
+            modelBuilder.Entity<SysOrganize>().HasMany(ur => ur.SysOrgUsers).WithOne(u => u.Organize).HasForeignKey(ur => ur.OrganizeId);
+            modelBuilder.Entity<SysOrganize>().HasMany(ur => ur.SysDepUsers).WithOne(u => u.Department).HasForeignKey(ur => ur.DepartmentId);
+
             modelBuilder.Entity<UserRole>().ToTable("UserRole");
             modelBuilder.Entity<UserAuthorize>().ToTable("UserAuthorize");
             modelBuilder.Entity<RoleAuthorize>().ToTable("RoleAuthorize");

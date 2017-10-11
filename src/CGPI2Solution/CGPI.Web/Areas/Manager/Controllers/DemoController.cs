@@ -13,5 +13,11 @@ namespace CGPI.Web.Areas.Manager.Controllers
         {
             return View();
         }
+
+        [HttpGet("default/main")]
+        public IActionResult Main()
+        {
+            return View();
+        }
     }
 }

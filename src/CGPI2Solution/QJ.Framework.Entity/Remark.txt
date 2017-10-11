@@ -1,5 +1,5 @@
 ﻿添加迁移
-Add-Migration 20170930 -Context ProjectContext
+Add-Migration 20170930 -Context CGPIDbContext
 
 更新数据库
-Update-Database -Context ProjectContext
+Update-Database -Context CGPIDbContext
