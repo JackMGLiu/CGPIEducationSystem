@@ -2,12 +2,12 @@
 
 namespace QJ.Framework.Infrastructure.Core
 {
-    public interface IGuidProvider
+    public interface IGuidCodeProvider
     {
         string CreateGuid();
     }
 
-    public class GuidProvider : IGuidProvider
+    public class GuidCodeProvider : IGuidCodeProvider
     {
         public string CreateGuid()
         {
