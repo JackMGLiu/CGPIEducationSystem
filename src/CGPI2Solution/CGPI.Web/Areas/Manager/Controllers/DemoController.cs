@@ -3,12 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using QJ.Framework.Entity.Entities.System;
+using QJ.Framework.Service.Interface;
 
 namespace CGPI.Web.Areas.Manager.Controllers
 {
     [Area("Manager")]
     public class DemoController : Controller
     {
+        private readonly ISysUserService _sysUserService;
+
+        public DemoController(ISysUserService sysUserService)
+        {
+            this._sysUserService = sysUserService;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -24,6 +33,20 @@ namespace CGPI.Web.Areas.Manager.Controllers
         public IActionResult Users()
         {
             return View();
+        }
+
+        [HttpPost("demo/addusers")]
+        public IActionResult AddUsers(SysUser model)
+        {
+            var res = _sysUserService.AddUser(model);
+            return Json(res);
+        }
+
+        [HttpGet("demo/count")]
+        public IActionResult UserCount()
+        {
+            var res = _sysUserService.GetCount();
+            return Content(res.ToString());
         }
 
         [HttpGet("demo/menus")]

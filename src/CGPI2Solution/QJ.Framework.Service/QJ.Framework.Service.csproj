@@ -8,4 +8,8 @@
     <ProjectReference Include="..\QJ.Framework.Entity\QJ.Framework.Entity.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTO\" />
+  </ItemGroup>
+
 </Project>

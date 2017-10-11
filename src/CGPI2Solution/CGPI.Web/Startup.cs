@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using QJ.Framework.Entity.DbContext;
+using QJ.Framework.Service.Impl;
+using QJ.Framework.Service.Interface;
 
 namespace CGPI.Web
 {
@@ -29,6 +31,9 @@ namespace CGPI.Web
 
             //工作单元
             services.AddUnitOfWork<CGPIDbContext>();
+
+            //DI
+            AddDependencies(services);
 
             services.AddMvc();
         }
@@ -58,6 +63,13 @@ namespace CGPI.Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        private IServiceCollection AddDependencies(IServiceCollection services)
+        {
+            services.AddScoped<ISysUserService, SysUserService>();
+
+            return services;
         }
     }
 }
