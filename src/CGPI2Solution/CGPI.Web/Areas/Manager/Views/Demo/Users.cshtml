@@ -89,19 +89,19 @@
                     <div class="layui-inline">
                         <label class="layui-form-label label-required">用户名：</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="Account" required lay-verify="required" value="{{d.user.account}}" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                            <input type="text" name="Account" lay-verify="required" value="{{d.user.account}}" placeholder="请输入用户名" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label label-required">真实姓名：</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="realname" required lay-verify="required" value="{{d.user.realname}}" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                            <input type="text" name="realname" lay-verify="required" value="{{d.user.realname}}" placeholder="请输入姓名" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label label-required">手机号码：</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="MobilePhone" required lay-verify="required|number|phone" value="{{d.user.mobile}}" placeholder="请输入手机号码" autocomplete="off" class="layui-input">
+                            <input type="text" name="MobilePhone" lay-verify="required|number|phone" value="{{d.user.mobile}}" placeholder="请输入手机号码" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                 </div>
@@ -109,11 +109,11 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">性别：</label>
                         <div class="layui-input-inline">
-                            <select name="gender" lay-verify="">
-                                {{# var woman = d.user.gender === 0?'selected':'';}} {{# var man = d.user.gender === 1?'selected':'';}}
+                            <select name="Gender" lay-verify="">
+                                {{# var woman = d.user.gender === false?'selected':'';}} {{# var man = d.user.gender === true?'selected':'';}}
                                 <option value="">请选择性别</option>
-                                <option value="1" {{man}}>男</option>
-                                <option value="0" {{woman}}>女</option>
+                                <option value="true" {{man}}>男</option>
+                                <option value="false" {{woman}}>女</option>
                             </select>
                         </div>
                     </div>
@@ -135,14 +135,14 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">出生日期：</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="Birthday" name="Birthday" required lay-verify="date" value="{{d.user.birth}}" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                            <input type="text" id="Birthday" name="Birthday" value="{{d.user.birth}}" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">身份证号：</label>
                     <div class="layui-input-block">
-                        <input type="text" id="CardId" name="CardId" required lay-verify="identity" value="{{d.user.cardid}}" placeholder="请输入身份证号码" autocomplete="off" class="layui-input">
+                        <input type="text" id="CardId" name="CardId" lay-verify="identity" value="{{d.user.cardid}}" placeholder="请输入身份证号码" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item layui-form-text">
@@ -276,7 +276,7 @@
                                         account: '',
                                         realname: '',
                                         mobile: '13753133423',
-                                        gender: -1,
+                                        gender: null,
                                         cardid: '140107198508032212',
                                         nation: -1,
                                         birth:'',

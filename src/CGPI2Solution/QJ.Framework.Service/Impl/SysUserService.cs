@@ -1,17 +1,21 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using QJ.Framework.Entity.Entities.System;
+using QJ.Framework.Infrastructure.Validate;
 using QJ.Framework.Service.Interface;
 
 namespace QJ.Framework.Service.Impl
 {
     public class SysUserService: ISysUserService
     {
+        private readonly IConfiguration _config;
         private readonly IUnitOfWork _unitOfWork;
         private IRepository<SysUser> _sysuseRepository;
 
-        public SysUserService(IUnitOfWork unitOfWork)
+        public SysUserService(IConfiguration config,IUnitOfWork unitOfWork)
         {
+            this._config = config;
             this._unitOfWork = unitOfWork;
             _sysuseRepository = this._unitOfWork.GetRepository<SysUser>();
         }
@@ -21,6 +25,7 @@ namespace QJ.Framework.Service.Impl
             try
             {
                 model.GuidCode=Guid.NewGuid().ToString("N");
+                model.Password = _config.GetSection("DefaultConfig:DefaultPwd").Value.ToMd5();
                 model.IsEnableed = true;
                 model.IsDeleted = false;
                 model.CreateTime=DateTime.Now;

@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CGPI.Web.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using QJ.Framework.Entity.Entities.System;
+using QJ.Framework.Infrastructure.Validate;
 using QJ.Framework.Service.Interface;
 
 namespace CGPI.Web.Areas.Manager.Controllers
 {
     [Area("Manager")]
-    public class DemoController : Controller
+    public class DemoController : BaseController
     {
         private readonly ISysUserService _sysUserService;
 
@@ -38,8 +40,24 @@ namespace CGPI.Web.Areas.Manager.Controllers
         [HttpPost("demo/addusers")]
         public IActionResult AddUsers(SysUser model)
         {
-            //var res = _sysUserService.AddUser(model);
-            return Json("true");
+            if (model.Id == 0 || model.Id.IsEmpty())
+            {
+                //add
+                var res = _sysUserService.AddUser(model);
+                if (res)
+                {
+                    return Success();
+                }
+                else
+                {
+                    return Error();
+                }
+            }
+            else
+            {
+                //edit
+                return Json("true");
+            }
         }
 
         [HttpGet("demo/count")]
