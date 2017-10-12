@@ -22,7 +22,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">用户名：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="account" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                        <input type="text" name="account" lay-verify="required|username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -72,7 +72,7 @@
                     <div class="layui-inline">
                         <label class="layui-form-label label-required">用户名：</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="Account" name="Account" lay-verify="required" value="{{d.user.Account}}" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                            <input type="text" id="Account" name="Account" lay-verify="required|accisexist" value="{{d.user.Account}}" placeholder="请输入用户名" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-inline">
@@ -84,7 +84,7 @@
                     <div class="layui-inline">
                         <label class="layui-form-label label-required">手机号码：</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="MobilePhone" name="MobilePhone" lay-verify="required|number|phone" value="{{d.user.MobilePhone}}" placeholder="请输入手机号码" autocomplete="off" class="layui-input">
+                            <input type="text" id="MobilePhone" name="MobilePhone" lay-verify="required|number|phone|mobileisexist" value="{{d.user.MobilePhone}}" placeholder="请输入手机号码" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                 </div>
@@ -168,6 +168,56 @@
                     laytpl = layui.laytpl,
                     laydate = layui.laydate;
 
+                form.verify({
+                    accisexist: function (value, item) {
+                        var status, msg = '';
+                        $.ajax({
+                            url: "/user/getaccount",
+                            type: "post",
+                            async: false,
+                            data: {
+                                account: value
+                            },
+                            dataType: "json",
+                            success: function (data) {
+                                status = data.state;
+                                msg = data.message;
+                            }
+                        });
+                        if (status != '1') {
+                            return msg;
+                        } else if (status == '1') {
+                            return false;
+                        } else {
+                            return '未知错误，请刷新重试！';
+                        }
+                    },
+                    mobileisexist: function (value, item) {
+                        var status, msg = '';
+                        $.ajax({
+                            url: "/user/getmobile",
+                            type: "post",
+                            async: false,
+                            data: {
+                                mobile: value
+                            },
+                            dataType: "json",
+                            success: function (data) {
+                                status = data.state;
+                                msg = data.message;
+                            }
+                        });
+                        if (status != '1') {
+                            return msg;
+                        } else if (status == '1') {
+                            return false;
+                        } else {
+                            return '未知错误，请刷新重试！';
+                        }
+                    },
+                });
+
+
                 var tableIns = table.render({
                     elem: '#users',
                     height: 'full-50', //容器高度
@@ -250,6 +300,7 @@
                         $('.kit-search-mored').toggle();
                     });
 
+
                 var editIndex;
                 //提交
                 form.on('submit(formEdit)',
@@ -261,83 +312,90 @@
                         $.formSubmit({
                             winindex: editIndex,
                             showMsg: true,
-                            url: "/demo/addusers",
+                            url: "/demo/saveuser",
                             data: form.field
                         });
+
+                        tableIns.reload();
                         return false;
                     });
 
                 //搜索表单提交
-                $('#btnsearch').on('click', function () {
-                    var keyword = $('#keyword').val();
-                    //带条件查询
-                    tableIns.reload({
-                        where: { 'keyword': keyword}
+                $('#btnsearch').on('click',
+                    function () {
+                        var keyword = $('#keyword').val();
+                        //带条件查询
+                        tableIns.reload({
+                            where: { 'keyword': keyword }
+                        });
+                        return false;
                     });
-                    return false;
-                });
 
-                form.on('submit(moresearch)', function (data) {
-                    console.log(data.field);
-                    layer.msg(JSON.stringify(data.field));
-                    //带条件查询
-                    tableIns.reload({
-                        where: data.field
+                form.on('submit(moresearch)',
+                    function (data) {
+                        console.log(data.field);
+                        layer.msg(JSON.stringify(data.field));
+                        //带条件查询
+                        tableIns.reload({
+                            where: data.field
+                        });
+                        return false;
                     });
-                    return false;
-                });
 
                 //工具条操作
-                table.on('tool(users)', function (obj) { //注：tool是工具条事件名，users是table原始容器的属性 lay-filter="对应的值"
-                    var data = obj.data; //获得当前行数据
-                    var layEvent = obj.event; //获得 lay-event 对应的值
-                    var tr = obj.tr; //获得当前行 tr 的DOM对象
+                table.on('tool(users)',
+                    function (obj) { //注：tool是工具条事件名，users是table原始容器的属性 lay-filter="对应的值"
+                        var data = obj.data; //获得当前行数据
+                        var layEvent = obj.event; //获得 lay-event 对应的值
+                        var tr = obj.tr; //获得当前行 tr 的DOM对象
 
-                    if (layEvent === 'detail') { //查看
-                        layer.msg(JSON.stringify(data));
-                        //do somehing
-                    } else if (layEvent === 'del') { //删除
-                        layer.confirm('确定要删除当前数据吗？', function (index) {
-                            obj.del(); //删除对应行（tr）的DOM结构
-                            layer.close(index);
-                            //向服务端发送删除指令
-                        });
-                    } else if (layEvent === 'edit') { //编辑
-                        var d = {
-                            user: data,
-                            Nations: staticData.nations
-                        };
-                        //do something
-                        laytpl($('#edit-tpl').html()).render(d, function (html) {
-                            layer.open({
-                                type: 1,
-                                title: '编辑用户信息',
-                                content: html,
-                                area: ['80%', '85%'],
-                                btn: ['提交', '重置', '取消'],
-                                yes: function (index, layero) {
-                                    editIndex = index;
-                                    $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
-                                },
-                                btn2: function (index, layero) {
-                                    $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
-                                    return false;
-                                },
-                                success: function () {
-                                    laydate.render({
-                                        elem: '#Birthday'
+                        if (layEvent === 'detail') { //查看
+                            layer.msg(JSON.stringify(data));
+                            //do somehing
+                        } else if (layEvent === 'del') { //删除
+                            layer.confirm('确定要删除当前数据吗？',
+                                function (index) {
+                                    obj.del(); //删除对应行（tr）的DOM结构
+                                    layer.close(index);
+                                    //向服务端发送删除指令
+                                });
+                        } else if (layEvent === 'edit') { //编辑
+                            var d = {
+                                user: data,
+                                Nations: staticData.nations
+                            };
+                            //do something
+                            laytpl($('#edit-tpl').html()).render(d,
+                                function (html) {
+                                    layer.open({
+                                        type: 1,
+                                        title: '编辑用户信息',
+                                        content: html,
+                                        area: ['80%', '85%'],
+                                        btn: ['提交', '重置', '取消'],
+                                        yes: function (index, layero) {
+                                            editIndex = index;
+                                            $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
+                                        },
+                                        btn2: function (index, layero) {
+                                            $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
+                                            return false;
+                                        },
+                                        success: function () {
+                                            laydate.render({
+                                                elem: '#Birthday'
+                                            });
+                                            form.render(null, 'form-edit');
+                                        }
                                     });
-                                    form.render(null, 'form-edit');
-                                }
-                            });
-                        });
-                        //同步更新缓存对应的值
-                        // obj.update({
-                        //     username: '123',
-                        //     title: 'xxx'
-                        // });
-                    }
-                });
+                                });
+                            //同步更新缓存对应的值
+                            // obj.update({
+                            //     username: '123',
+                            //     title: 'xxx'
+                            // });
+                        }
+                    });
 
                 $('.kit-search-btns').children('a').off('click').on('click',
                     function () {
@@ -378,6 +436,8 @@
                                                 return false;
                                             },
                                             success: function () {
+
+
                                                 laydate.render({
                                                     elem: '#Birthday'
                                                 });

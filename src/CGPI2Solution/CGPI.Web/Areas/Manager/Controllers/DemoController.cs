@@ -51,8 +51,30 @@ namespace CGPI.Web.Areas.Manager.Controllers
             return Content(json.ToJson());
         }
 
-        [HttpPost("demo/addusers")]
-        public IActionResult AddUsers(SysUser model)
+        [HttpPost("user/getaccount")]
+        public IActionResult CheckAccount(string account)
+        {
+            var res = _sysUserService.GetUserByAccount(account);
+            if (res)
+            {
+                return Error("已存在当前用户名，请重新输入");
+            }
+            return Success("恭喜您，该用户名可以注册");
+        }
+
+        [HttpPost("user/getmobile")]
+        public IActionResult CheckMobile(string mobile)
+        {
+            var res = _sysUserService.GetUserByMobile(mobile);
+            if (res)
+            {
+                return Error("当前手机号已经注册，请重新输入");
+            }
+            return Success("恭喜您，该手机号可以注册");
+        }
+
+        [HttpPost("demo/saveuser")]
+        public IActionResult SaveData(SysUser model)
         {
             if (model.Id == 0 || model.Id.IsEmpty())
             {
@@ -70,7 +92,15 @@ namespace CGPI.Web.Areas.Manager.Controllers
             else
             {
                 //edit
-                return Json("true");
+                var res = _sysUserService.EditUser(model);
+                if (res)
+                {
+                    return Success();
+                }
+                else
+                {
+                    return Error();
+                }
             }
         }
 

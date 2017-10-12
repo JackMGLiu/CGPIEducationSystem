@@ -42,7 +42,39 @@ namespace QJ.Framework.Service.Impl
             {
                 throw e;
             }
+        }
 
+        public bool EditUser(SysUser model)
+        {
+            try
+            {
+                var user = _sysuseRepository.Find(model.Id);
+                if (!user.IsEmpty())
+                {
+                    user.Account = model.Account;
+                    user.RealName = model.RealName;
+                    user.MobilePhone = model.MobilePhone;
+                    user.Gender = model.Gender;
+                    user.Nation = model.Nation;
+                    user.Birthday = model.Birthday;
+                    user.CardId = model.CardId;
+                    user.Address = model.Address;
+                    user.Remark = model.Remark;
+                    user.ModifyTime = DateTime.Now;
+                    user.CreateUser = "testmanager";
+                    _sysuseRepository.Update(user);
+                    bool res = _unitOfWork.SaveChanges() > 0;
+                    return res;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public int GetCount()
@@ -63,6 +95,32 @@ namespace QJ.Framework.Service.Impl
                 var data = _sysuseRepository.GetPagedList(predicate: m => m.RealName.Contains(keyword) || m.EnCode.Contains(keyword) || m.MobilePhone.Contains(keyword), orderBy: ms => ms.OrderByDescending(m => m.CreateTime),
     pageIndex: page - 1, pageSize: pagesize);
                 return data;
+            }
+        }
+
+        public bool GetUserByAccount(string account)
+        {
+            try
+            {
+                var res = _sysuseRepository.Count(m => m.Account == account) > 0;
+                return res;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public bool GetUserByMobile(string mobile)
+        {
+            try
+            {
+                var res = _sysuseRepository.Count(m => m.MobilePhone == mobile) > 0;
+                return res;
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
     }
