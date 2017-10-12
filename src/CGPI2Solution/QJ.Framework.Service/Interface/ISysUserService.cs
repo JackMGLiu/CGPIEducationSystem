@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using QJ.Framework.Entity.Entities.System;
 
 namespace QJ.Framework.Service.Interface

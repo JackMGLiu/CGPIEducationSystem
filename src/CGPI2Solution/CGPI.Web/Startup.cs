@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using QJ.Framework.Entity.DbContext;
+using QJ.Framework.Service.DTO;
 using QJ.Framework.Service.Impl;
 using QJ.Framework.Service.Interface;
 
@@ -15,9 +17,17 @@ namespace CGPI.Web
 {
     public class Startup
     {
+        //AutoMapper
+        private MapperConfiguration _mapperConfiguration { get; set; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            _mapperConfiguration = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new AutoMapperProfileConfiguration());
+            });
         }
 
         public IConfiguration Configuration { get; }
@@ -35,7 +45,11 @@ namespace CGPI.Web
             //DI
             AddDependencies(services);
 
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                options.SerializerSettings.ContractResolver =
+                    new Newtonsoft.Json.Serialization.DefaultContractResolver();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,6 +81,9 @@ namespace CGPI.Web
 
         private IServiceCollection AddDependencies(IServiceCollection services)
         {
+            //AutoMapper
+            services.AddSingleton<IMapper>(sp => _mapperConfiguration.CreateMapper());
+
             services.AddScoped<ISysUserService, SysUserService>();
 
             return services;

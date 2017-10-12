@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using CGPI.Web.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using QJ.Framework.Entity.Entities.System;
 using QJ.Framework.Infrastructure.Json;
 using QJ.Framework.Infrastructure.Validate;
+using QJ.Framework.Service.DTO.ViewModels;
 using QJ.Framework.Service.Interface;
 
 namespace CGPI.Web.Areas.Manager.Controllers
@@ -14,10 +16,12 @@ namespace CGPI.Web.Areas.Manager.Controllers
     [Area("Manager")]
     public class DemoController : BaseController
     {
+        private readonly IMapper _mapper;
         private readonly ISysUserService _sysUserService;
 
-        public DemoController(ISysUserService sysUserService)
+        public DemoController(IMapper mapper, ISysUserService sysUserService)
         {
+            this._mapper = mapper;
             this._sysUserService = sysUserService;
         }
 
@@ -41,9 +45,10 @@ namespace CGPI.Web.Areas.Manager.Controllers
         [HttpPost("demo/getusers")]
         public IActionResult UserData(string keyword, int page, int limit)
         {
-            var userdata = _sysUserService.GetPagedList(keyword, page, limit);
-            var res = new { code = 0, msg = keyword, count = userdata.TotalCount, data = userdata.Items };
-            return Content(res.ToJson());
+            var res = _sysUserService.GetPagedList(keyword, page, limit);
+            var userdata = _mapper.Map<List<SysUserViewModel>>(res.Items);
+            var json = new { code = 0, msg = "", count = res.TotalCount, data = userdata };
+            return Content(json.ToJson());
         }
 
         [HttpPost("demo/addusers")]

@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using QJ.Framework.Entity.Entities.System;
 using QJ.Framework.Infrastructure.Validate;
+using QJ.Framework.Service.DTO.ViewModels;
 using QJ.Framework.Service.Interface;
 
 namespace QJ.Framework.Service.Impl
