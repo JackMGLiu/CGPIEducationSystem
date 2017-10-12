@@ -382,6 +382,9 @@
                                             return false;
                                         },
                                         success: function () {
+                                            $('#Account').removeAttr('lay-verify').attr('disabled', true).addClass('layui-disabled');
+                                            $('#MobilePhone').removeAttr('lay-verify').attr('disabled', true).addClass('layui-disabled');
+
                                             laydate.render({
                                                 elem: '#Birthday'
                                             });
