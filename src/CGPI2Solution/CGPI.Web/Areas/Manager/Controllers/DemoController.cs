@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CGPI.Web.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using QJ.Framework.Entity.Entities.System;
+using QJ.Framework.Infrastructure.Json;
 using QJ.Framework.Infrastructure.Validate;
 using QJ.Framework.Service.Interface;
 
@@ -35,6 +36,14 @@ namespace CGPI.Web.Areas.Manager.Controllers
         public IActionResult Users()
         {
             return View();
+        }
+
+        [HttpPost("demo/getusers")]
+        public IActionResult UserData(string keyword, int page, int limit)
+        {
+            var userdata = _sysUserService.GetPagedList(keyword, page, limit);
+            var res = new { code = 0, msg = keyword, count = userdata.TotalCount, data = userdata.Items };
+            return Content(res.ToJson());
         }
 
         [HttpPost("demo/addusers")]

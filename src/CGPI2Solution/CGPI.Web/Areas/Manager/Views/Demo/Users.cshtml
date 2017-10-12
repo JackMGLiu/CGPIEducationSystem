@@ -11,8 +11,8 @@
             </div>
             <div class="kit-search-inputs">
                 <div class="kit-search-keyword">
-                    <input type="text" class="layui-input" name="keyword" placeholder="搜索关键字.." />
-                    <button lay-submit lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
+                    <input type="text" class="layui-input" id="keyword" name="keyword" placeholder="姓名/工号/手机号码" />
+                    <button id="btnsearch"><i class="layui-icon">&#xe615;</i></button>
                 </div>
                 <div class="kit-search-more" id="kit-search-more">更多筛选<i class="layui-icon">&#xe61a;</i></div>
             </div>
@@ -20,60 +20,43 @@
         <div class="kit-search-mored layui-anim layui-anim-upbit">
             <div class="kit-search-body">
                 <div class="layui-form-item">
-                    <label class="layui-form-label">输入框</label>
+                    <label class="layui-form-label">用户名：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="title" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                        <input type="text" name="account" placeholder="请输入用户名" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-inline">
-                        <label class="layui-form-label">验证手机</label>
+                        <label class="layui-form-label">手机号码：</label>
                         <div class="layui-input-inline">
-                            <input type="tel" name="phone" autocomplete="off" class="layui-input">
+                            <input type="text" name="mobile" placeholder="请输入手机号码" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-inline">
-                        <label class="layui-form-label">验证邮箱</label>
+                        <label class="layui-form-label">电子邮箱：</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="email" autocomplete="off" class="layui-input">
+                            <input type="text" name="email" placeholder="请输入电子邮箱" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-inline">
-                        <label class="layui-form-label">范围</label>
-                        <div class="layui-input-inline" style="width: 100px;">
-                            <input type="text" name="price_min" placeholder="￥" autocomplete="off" class="layui-input">
+                        <label class="layui-form-label">出生日期：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="birth" name="birth" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
                         </div>
-                        <div class="layui-form-mid">-</div>
-                        <div class="layui-input-inline" style="width: 100px;">
-                            <input type="text" name="price_max" placeholder="￥" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">单行选择框</label>
-                    <div class="layui-input-block">
-                        <select name="interest" lay-filter="aihao">
-                            <option value=""></option>
-                            <option value="0">写作</option>
-                            <option value="1" selected="">阅读</option>
-                            <option value="2">游戏</option>
-                            <option value="3">音乐</option>
-                            <option value="4">旅行</option>
-                        </select>
                     </div>
                 </div>
             </div>
             <div class="kit-search-footer">
                 <button type="reset" class="layui-btn layui-btn-small layui-btn-primary kit-btn">重置</button>
-                <button lay-submit lay-filter="search" class="layui-btn layui-btn-small kit-btn">确定</button>
+                <button lay-submit lay-filter="moresearch" class="layui-btn layui-btn-small kit-btn">确定</button>
             </div>
         </div>
     </form>
     <div class="kit-table-body">
         <table id="users" lay-filter="users"></table>
-        <script type="text/html" id="barDemo">
+        <script type="text/html" id="rowtools">
             <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
             <a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
             <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
@@ -82,26 +65,26 @@
 </div>
 @section managerscripts{
     <script type="text/html" id="edit-tpl">
-        <div style="margin:10px">
+        <div style="margin: 10px">
             <form class="layui-form" action="" lay-filter="form-edit">
-                <input type="hidden" name="id" value="{{d.user.id}}" />
+                <input type="hidden" id="Id" name="Id" value="{{d.user.Id}}" />
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <label class="layui-form-label label-required">用户名：</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="Account" lay-verify="required" value="{{d.user.account}}" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                            <input type="text" id="Account" name="Account" lay-verify="required" value="{{d.user.Account}}" placeholder="请输入用户名" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label label-required">真实姓名：</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="realname" lay-verify="required" value="{{d.user.realname}}" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                            <input type="text" id="RealName" name="RealName" lay-verify="required" value="{{d.user.RealName}}" placeholder="请输入姓名" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label label-required">手机号码：</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="MobilePhone" lay-verify="required|number|phone" value="{{d.user.mobile}}" placeholder="请输入手机号码" autocomplete="off" class="layui-input">
+                            <input type="text" id="MobilePhone" name="MobilePhone" lay-verify="required|number|phone" value="{{d.user.MobilePhone}}" placeholder="请输入手机号码" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                 </div>
@@ -109,8 +92,8 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">性别：</label>
                         <div class="layui-input-inline">
-                            <select name="Gender" lay-verify="">
-                                {{# var woman = d.user.gender === false?'selected':'';}} {{# var man = d.user.gender === true?'selected':'';}}
+                            <select id="Gender" name="Gender" lay-verify="">
+                                {{# var woman = d.user.Gender === false?'selected':'';}} {{# var man = d.user.Gender === true?'selected':'';}}
                                 <option value="">请选择性别</option>
                                 <option value="true" {{man}}>男</option>
                                 <option value="false" {{woman}}>女</option>
@@ -120,10 +103,10 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">民族：</label>
                         <div class="layui-input-inline">
-                            <select name="nation" lay-verify="">
+                            <select id="Nation" name="Nation" lay-verify="">
                                 <option value=""></option>
-                                {{# layui.each(d.nations,function(index,item){ }}
-                                {{# if(item.id===d.user.nation){}}
+                                {{# layui.each(d.Nations,function(index,item){ }}
+                                {{# if(item.id==d.user.Nation){}}
                                 <option value="{{item.id}}" selected="selected">{{item.name}}</option>
                                 {{#}else{}}
                                 <option value="{{item.id}}">{{item.name}}</option>
@@ -135,29 +118,29 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">出生日期：</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="Birthday" name="Birthday" value="{{d.user.birth}}" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                            <input type="text" id="Birthday" name="Birthday" value="{{d.user.Birthday}}" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">身份证号：</label>
                     <div class="layui-input-block">
-                        <input type="text" id="CardId" name="CardId" lay-verify="identity" value="{{d.user.cardid}}" placeholder="请输入身份证号码" autocomplete="off" class="layui-input">
+                        <input type="text" id="CardId" name="CardId" lay-verify="identity" value="{{d.user.CardId}}" placeholder="请输入身份证号码" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">联系地址：</label>
                     <div class="layui-input-block">
-                        <textarea name="Address" placeholder="联系地址" class="layui-textarea">{{d.user.address}}</textarea>
+                        <textarea id="Address" name="Address" placeholder="联系地址" class="layui-textarea">{{d.user.Address}}</textarea>
                     </div>
                 </div>
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">备注信息：</label>
                     <div class="layui-input-block">
-                        <textarea name="Remark" placeholder="备注信息" class="layui-textarea">{{d.user.remark}}</textarea>
+                        <textarea id="Remark" name="Remark" placeholder="备注信息" class="layui-textarea">{{d.user.Remark}}</textarea>
                     </div>
                 </div>
-                <div class="layui-form-item" style="display:none;">
+                <div class="layui-form-item" style="display: none;">
                     <div class="layui-input-block">
                         <button class="layui-btn" lay-submit lay-filter="formEdit">立即提交</button>
                         <button type="reset" class="layui-btn layui-btn-primary">重置</button>
@@ -166,8 +149,15 @@
             </form>
         </div>
     </script>
-
-
+    <script type="text/html" id="gendertpl">
+        {{#  if(d.Gender ==true){ }}
+        <span style="color: #000;">男</span>
+        {{#  } else if(d.Gender ==false) { }}
+        <span style="color: #ff0023;">女</span>
+        {{#  } else { }}
+        <span>未知</span>
+        {{#  } }}
+    </script>
     <script>
         layui.use(['table', 'laydate'],
             function () {
@@ -181,9 +171,10 @@
                 var tableIns = table.render({
                     elem: '#users',
                     height: 'full-50', //容器高度
-                    url: 'table.json',
+                    url: '/demo/getusers',
                     page: true,
                     id: 'tbusers',
+                    limit: 20,
                     cols: [
                         [
                             {
@@ -192,44 +183,52 @@
                             }, {
                                 field: 'Id',
                                 title: 'ID',
-                                width: 80
+                                width: 50
                             }, {
                                 field: 'Account',
                                 title: '用户名',
-                                width: 80
+                                width: 110
                             },
                             {
                                 field: 'EnCode',
                                 title: '工号',
-                                width: 100
+                                width: 110
+                            },
+                            {
+                                field: 'RealName',
+                                title: '姓名',
+                                width: 120
                             },
                             {
                                 field: 'Gender',
                                 title: '性别',
-                                width: 80
+                                templet: '#gendertpl',
+                                width: 100
                             }, {
                                 field: 'MobilePhone',
                                 title: '手机号码',
-                                width: 120
+                                width: 150
                             }, {
                                 field: 'CreateTime',
                                 title: '添加时间',
-                                width: 135
+                                width: 200,
+                                sort: true
                             }, {
                                 field: 'CreateUser',
                                 title: '操作人',
-                                width: 135
+                                width: 150
                                 //sort: true
                             }, {
                                 fixed: 'right',
                                 title: '操作',
-                                width: 150,
+                                width: 200,
                                 align: 'center',
-                                toolbar: '#barDemo'
+                                toolbar: '#rowtools'
                             }
                         ]
                     ],
                     done: function (res, curr, count) {
+                        //console.info(res.data);
                         //如果是异步请求数据方式，res即为你接口返回的信息。
                         //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
                         // console.log(res);
@@ -239,29 +238,105 @@
                         // console.log(count);
                     },
                     loading: true,
-                    //method: 'post'
+                    method: 'post'
                 });
 
                 form.render(null, 'kit-search-form');
                 $('#kit-search-more').on('click',
                     function () {
+                        laydate.render({
+                            elem: '#birth'
+                        });
                         $('.kit-search-mored').toggle();
                     });
 
                 var editIndex;
                 //提交
-                form.on('submit(formEdit)', function (form) {
-                    //console.log(data);
-                    //layer.msg('formEdit');
-                    //editIndex && layer.close(editIndex); //关闭弹出层
+                form.on('submit(formEdit)',
+                    function (form) {
+                        //console.log(data);
+                        //layer.msg('formEdit');
+                        //editIndex && layer.close(editIndex); //关闭弹出层
 
-                    $.formSubmit({
-                        winindex: editIndex,
-                        showMsg: false,
-                        url: "/demo/addusers",
-                        data: form.field
+                        $.formSubmit({
+                            winindex: editIndex,
+                            showMsg: true,
+                            url: "/demo/addusers",
+                            data: form.field
+                        });
+                        return false;
+                    });
+
+                //搜索表单提交
+                $('#btnsearch').on('click', function () {
+                    var keyword = $('#keyword').val();
+                    //带条件查询
+                    tableIns.reload({
+                        where: { 'keyword': keyword}
                     });
                     return false;
+                });
+
+                form.on('submit(moresearch)', function (data) {
+                    console.log(data.field);
+                    layer.msg(JSON.stringify(data.field));
+                    //带条件查询
+                    tableIns.reload({
+                        where: data.field
+                    });
+                    return false;
+                });
+
+                //工具条操作
+                table.on('tool(users)', function (obj) { //注：tool是工具条事件名，users是table原始容器的属性 lay-filter="对应的值"
+                    var data = obj.data; //获得当前行数据
+                    var layEvent = obj.event; //获得 lay-event 对应的值
+                    var tr = obj.tr; //获得当前行 tr 的DOM对象
+
+                    if (layEvent === 'detail') { //查看
+                        layer.msg(JSON.stringify(data));
+                        //do somehing
+                    } else if (layEvent === 'del') { //删除
+                        layer.confirm('确定要删除当前数据吗？', function (index) {
+                            obj.del(); //删除对应行（tr）的DOM结构
+                            layer.close(index);
+                            //向服务端发送删除指令
+                        });
+                    } else if (layEvent === 'edit') { //编辑
+                        var d = {
+                            user: data,
+                            Nations: staticData.nations
+                        };
+                        //do something
+                        laytpl($('#edit-tpl').html()).render(d, function (html) {
+                            layer.open({
+                                type: 1,
+                                title: '编辑用户信息',
+                                content: html,
+                                area: ['80%', '85%'],
+                                btn: ['提交', '重置', '取消'],
+                                yes: function (index, layero) {
+                                    editIndex = index;
+                                    $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
+                                },
+                                btn2: function (index, layero) {
+                                    $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
+                                    return false;
+                                },
+                                success: function () {
+                                    laydate.render({
+                                        elem: '#Birthday'
+                                    });
+                                    form.render(null, 'form-edit');
+                                }
+                            });
+                        });
+                        //同步更新缓存对应的值
+                        // obj.update({
+                        //     username: '123',
+                        //     title: 'xxx'
+                        // });
+                    }
                 });
 
                 $('.kit-search-btns').children('a').off('click').on('click',
@@ -272,26 +347,25 @@
                             case 'add':
                                 var d = {
                                     user: {
-                                        id: 0,
-                                        account: '',
-                                        realname: '',
-                                        mobile: '13753133423',
-                                        gender: null,
-                                        cardid: '140107198508032212',
-                                        nation: -1,
-                                        birth:'',
-                                        address: '',
-                                        remark: ''
+                                        Id: 0,
+                                        Account: '',
+                                        RealName: '',
+                                        MobilePhone: '',
+                                        Gender: null,
+                                        Nation: -1,
+                                        CardId: '',
+                                        Birthday: '',
+                                        Address: '',
+                                        Remark: ''
                                     },
-                                    nations: staticData.nations,
-                                    classifies: staticData.classifies
+                                    Nations: staticData.nations
                                 };
                                 //渲染
                                 laytpl($('#edit-tpl').html()).render(d,
                                     function (html) {
                                         layer.open({
                                             type: 1,
-                                            title: '用户信息表单',
+                                            title: '新增用户信息',
                                             content: html,
                                             area: ['80%', '85%'],
                                             btn: ['提交', '重置', '取消'],
