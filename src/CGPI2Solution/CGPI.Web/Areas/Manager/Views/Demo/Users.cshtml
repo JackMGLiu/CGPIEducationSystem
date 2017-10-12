@@ -110,9 +110,10 @@
                         <label class="layui-form-label">性别：</label>
                         <div class="layui-input-inline">
                             <select name="gender" lay-verify="">
+                                {{# var woman = d.user.gender === 0?'selected':'';}} {{# var man = d.user.gender === 1?'selected':'';}}
                                 <option value="">请选择性别</option>
-                                <option value="1">男</option>
-                                <option value="0">女</option>
+                                <option value="1" {{man}}>男</option>
+                                <option value="0" {{woman}}>女</option>
                             </select>
                         </div>
                     </div>
@@ -134,7 +135,7 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">出生日期：</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="Birthday" name="Birthday" required lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                            <input type="text" id="Birthday" name="Birthday" required lay-verify="date" value="{{d.user.birth}}" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                 </div>
@@ -168,7 +169,7 @@
 
 
     <script>
-        layui.use(['table','laydate'],
+        layui.use(['table', 'laydate'],
             function () {
                 var table = layui.table,
                     $ = layui.jquery,
@@ -179,7 +180,7 @@
 
                 var tableIns = table.render({
                     elem: '#users',
-                    height: 'full-180', //容器高度
+                    height: 'full-50', //容器高度
                     url: 'table.json',
                     page: true,
                     id: 'tbusers',
@@ -274,11 +275,13 @@
                                         id: 0,
                                         account: '',
                                         realname: '',
-                                        mobile:'13753133423',
-                                        cardid:'140107198508032212',
-                                        nation: '',
+                                        mobile: '13753133423',
+                                        gender: -1,
+                                        cardid: '140107198508032212',
+                                        nation: -1,
+                                        birth:'',
                                         address: '',
-                                        remark:''
+                                        remark: ''
                                     },
                                     nations: staticData.nations,
                                     classifies: staticData.classifies
