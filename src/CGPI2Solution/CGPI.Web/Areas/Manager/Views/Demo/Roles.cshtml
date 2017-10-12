@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "测试用户管理";
+    ViewData["Title"] = "测试角色管理";
 }
 <div class="kit-table">
     <form class="layui-form" lay-filter="kit-search-form">
@@ -11,51 +11,51 @@
             </div>
             <div class="kit-search-inputs">
                 <div class="kit-search-keyword">
-                    <input type="text" class="layui-input" id="keyword" name="keyword" placeholder="姓名/工号/手机号码" />
+                    <input type="text" class="layui-input" id="keyword" name="keyword" placeholder="编码/名称" />
                     <button id="btnsearch"><i class="layui-icon">&#xe615;</i></button>
                 </div>
-                <div class="kit-search-more" id="kit-search-more">更多筛选<i class="layui-icon">&#xe61a;</i></div>
+                @*<div class="kit-search-more" id="kit-search-more">更多筛选<i class="layui-icon">&#xe61a;</i></div>*@
             </div>
         </div>
-        <div class="kit-search-mored layui-anim layui-anim-upbit">
-            <div class="kit-search-body">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">用户名：</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="account" lay-verify="required|username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">手机号码：</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="mobile" placeholder="请输入手机号码" autocomplete="off" class="layui-input">
+        @*<div class="kit-search-mored layui-anim layui-anim-upbit">
+                <div class="kit-search-body">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">用户名：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="account" lay-verify="required|username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
                         </div>
                     </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">电子邮箱：</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="email" placeholder="请输入电子邮箱" autocomplete="off" class="layui-input">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">手机号码：</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="mobile" placeholder="请输入手机号码" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">电子邮箱：</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="email" placeholder="请输入电子邮箱" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">出生日期：</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="birth" name="birth" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">出生日期：</label>
-                        <div class="layui-input-inline">
-                            <input type="text" id="birth" name="birth" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
+                <div class="kit-search-footer">
+                    <button type="reset" class="layui-btn layui-btn-small layui-btn-primary kit-btn">重置</button>
+                    <button lay-submit lay-filter="moresearch" class="layui-btn layui-btn-small kit-btn">确定</button>
                 </div>
-            </div>
-            <div class="kit-search-footer">
-                <button type="reset" class="layui-btn layui-btn-small layui-btn-primary kit-btn">重置</button>
-                <button lay-submit lay-filter="moresearch" class="layui-btn layui-btn-small kit-btn">确定</button>
-            </div>
-        </div>
+            </div>*@
     </form>
     <div class="kit-table-body">
-        <table id="users" lay-filter="users"></table>
+        <table id="roles" lay-filter="roles"></table>
         <script type="text/html" id="rowtools">
             <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
             <a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
@@ -63,81 +63,67 @@
         </script>
     </div>
 </div>
-@section managerscripts{
+@section managerscripts
+    {
     <script type="text/html" id="edit-tpl">
         <div style="margin: 10px">
             <form class="layui-form" action="" lay-filter="form-edit">
-                <input type="hidden" id="Id" name="Id" value="{{d.user.Id}}" />
+                <input type="hidden" id="Id" name="Id" value="{{d.role.Id}}" />
                 <div class="layui-form-item">
                     <div class="layui-inline">
-                        <label class="layui-form-label label-required">用户名：</label>
+                        <label class="layui-form-label label-required">角色名：</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="Account" name="Account" lay-verify="required|accisexist" value="{{d.user.Account}}" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                            <input type="text" id="RoleName" name="RoleName" lay-verify="required" value="{{d.role.RoleName}}" placeholder="请输入角色名" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-inline">
-                        <label class="layui-form-label label-required">真实姓名：</label>
+                        <label class="layui-form-label label-required">角色编码：</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="RealName" name="RealName" lay-verify="required" value="{{d.user.RealName}}" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                            <input type="text" id="EnCode" name="EnCode" lay-verify="required" value="{{d.role.EnCode}}" placeholder="请输入角色编码" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-inline">
-                        <label class="layui-form-label label-required">手机号码：</label>
+                        <label class="layui-form-label label-required">角色类型：</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="MobilePhone" name="MobilePhone" lay-verify="required|number|phone|mobileisexist" value="{{d.user.MobilePhone}}" placeholder="请输入手机号码" autocomplete="off" class="layui-input">
+                            <div class="layui-input-inline">
+                                <select id="Type" name="Type" lay-verify="">
+                                    <option value=""></option>
+                                    {{# layui.each(d.Types,function(index,item){ }}
+                                    {{# if(item.id==d.role.Type){}}
+                                    <option value="{{item.id}}" selected="selected">{{item.name}}</option>
+                                    {{#}else{}}
+                                    <option value="{{item.id}}">{{item.name}}</option>
+                                    {{#};}}
+                                    {{# }); }}
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-inline">
-                        <label class="layui-form-label">性别：</label>
+                        <label class="layui-form-label">排序：</label>
                         <div class="layui-input-inline">
-                            <select id="Gender" name="Gender" lay-verify="">
-                                {{# var woman = d.user.Gender === false?'selected':'';}} {{# var man = d.user.Gender === true?'selected':'';}}
-                                <option value="">请选择性别</option>
-                                <option value="true" {{man}}>男</option>
-                                <option value="false" {{woman}}>女</option>
-                            </select>
+                            <input type="text" id="SortCode" name="SortCode" value="{{d.role.SortCode}}" lay-verify="number" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-inline">
-                        <label class="layui-form-label">民族：</label>
+                        <label class="layui-form-label">状态：</label>
                         <div class="layui-input-inline">
-                            <select id="Nation" name="Nation" lay-verify="">
-                                <option value=""></option>
-                                {{# layui.each(d.Nations,function(index,item){ }}
-                                {{# if(item.id==d.user.Nation){}}
-                                <option value="{{item.id}}" selected="selected">{{item.name}}</option>
-                                {{#}else{}}
-                                <option value="{{item.id}}">{{item.name}}</option>
-                                {{#};}}
-                                {{# }); }}
-                            </select>
+                            {{# var ischecked = d.role.IsEnableed === true?'checked':'';}}
+                            <input type="checkbox" id="IsEnableed" name="IsEnableed" lay-skin="switch" lay-text="启用|禁用" {{ischecked}} value="{{d.role.IsEnableed}}">
                         </div>
                     </div>
                     <div class="layui-inline">
-                        <label class="layui-form-label">出生日期：</label>
+                        <label class="layui-form-label"></label>
                         <div class="layui-input-inline">
-                            <input type="text" id="Birthday" name="Birthday" value="{{d.user.Birthday}}" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
                         </div>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">身份证号：</label>
-                    <div class="layui-input-block">
-                        <input type="text" id="CardId" name="CardId" lay-verify="identity" value="{{d.user.CardId}}" placeholder="请输入身份证号码" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item layui-form-text">
-                    <label class="layui-form-label">联系地址：</label>
-                    <div class="layui-input-block">
-                        <textarea id="Address" name="Address" placeholder="联系地址" class="layui-textarea">{{d.user.Address}}</textarea>
                     </div>
                 </div>
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">备注信息：</label>
                     <div class="layui-input-block">
-                        <textarea id="Remark" name="Remark" placeholder="备注信息" class="layui-textarea">{{d.user.Remark}}</textarea>
+                        <textarea id="Remark" name="Remark" placeholder="备注信息" class="layui-textarea">{{d.role.Remark}}</textarea>
                     </div>
                 </div>
                 <div class="layui-form-item" style="display: none;">
@@ -149,11 +135,11 @@
             </form>
         </div>
     </script>
-    <script type="text/html" id="gendertpl">
-        {{#  if(d.Gender ==true){ }}
-        <span style="color: #000;">男</span>
-        {{#  } else if(d.Gender ==false) { }}
-        <span style="color: #ff0023;">女</span>
+    <script type="text/html" id="statustpl">
+        {{#  if(d.IsEnableed ==true){ }}
+        <span class="layui-btn layui-btn-small layui-btn-normal">启用</span>
+        {{#  } else if(d.IsEnableed ==false) { }}
+        <span class="layui-btn layui-btn-small layui-btn-danger">禁用</span>
         {{#  } else { }}
         <span>未知</span>
         {{#  } }}
@@ -168,62 +154,12 @@
                     laytpl = layui.laytpl,
                     laydate = layui.laydate;
 
-                form.verify({
-                    accisexist: function (value, item) {
-                        var status, msg = '';
-                        $.ajax({
-                            url: "/user/getaccount",
-                            type: "post",
-                            async: false,
-                            data: {
-                                account: value
-                            },
-                            dataType: "json",
-                            success: function (data) {
-                                status = data.state;
-                                msg = data.message;
-                            }
-                        });
-                        if (status != '1') {
-                            return msg;
-                        } else if (status == '1') {
-                            return false;
-                        } else {
-                            return '未知错误，请刷新重试！';
-                        }
-                    },
-                    mobileisexist: function (value, item) {
-                        var status, msg = '';
-                        $.ajax({
-                            url: "/user/getmobile",
-                            type: "post",
-                            async: false,
-                            data: {
-                                mobile: value
-                            },
-                            dataType: "json",
-                            success: function (data) {
-                                status = data.state;
-                                msg = data.message;
-                            }
-                        });
-                        if (status != '1') {
-                            return msg;
-                        } else if (status == '1') {
-                            return false;
-                        } else {
-                            return '未知错误，请刷新重试！';
-                        }
-                    },
-                });
-
-
                 var tableIns = table.render({
-                    elem: '#users',
+                    elem: '#roles',
                     height: 'full-50', //容器高度
-                    url: '/demo/getusers',
+                    url: '/demo/getroles',
                     page: true,
-                    id: 'tbusers',
+                    id: 'tbroles',
                     limit: 20,
                     cols: [
                         [
@@ -231,29 +167,25 @@
                                 checkbox: true,
                                 fixed: true
                             }, {
-                                field: 'Account',
-                                title: '用户名',
+                                field: 'RoleName',
+                                title: '角色名',
                                 width: 110
                             },
                             {
                                 field: 'EnCode',
-                                title: '工号',
+                                title: '角色编码',
                                 width: 110
                             },
                             {
-                                field: 'RealName',
-                                title: '姓名',
-                                width: 120
-                            },
-                            {
-                                field: 'Gender',
-                                title: '性别',
-                                templet: '#gendertpl',
+                                field: 'SortCode',
+                                title: '排序码',
                                 width: 100
                             }, {
-                                field: 'MobilePhone',
-                                title: '手机号码',
-                                width: 150
+                                field: 'IsEnableed',
+                                title: '当前状态',
+                                align: 'center',
+                                templet: '#statustpl',
+                                width: 100
                             }, {
                                 field: 'CreateTime',
                                 title: '添加时间',
@@ -288,14 +220,6 @@
                 });
 
                 form.render(null, 'kit-search-form');
-                $('#kit-search-more').on('click',
-                    function () {
-                        laydate.render({
-                            elem: '#birth'
-                        });
-                        $('.kit-search-mored').toggle();
-                    });
-
 
                 var editIndex;
                 //提交
@@ -308,7 +232,7 @@
                         $.formSubmit({
                             winindex: editIndex,
                             showMsg: true,
-                            url: "/demo/saveuser",
+                            url: "/demo/saverole",
                             data: form.field
                         });
 
@@ -327,19 +251,9 @@
                         return false;
                     });
 
-                form.on('submit(moresearch)',
-                    function (data) {
-                        console.log(data.field);
-                        layer.msg(JSON.stringify(data.field));
-                        //带条件查询
-                        tableIns.reload({
-                            where: data.field
-                        });
-                        return false;
-                    });
 
                 //工具条操作
-                table.on('tool(users)',
+                table.on('tool(roles)',
                     function (obj) { //注：tool是工具条事件名，users是table原始容器的属性 lay-filter="对应的值"
                         var data = obj.data; //获得当前行数据
                         var layEvent = obj.event; //获得 lay-event 对应的值
@@ -405,28 +319,25 @@
                         switch (action) {
                             case 'add':
                                 var d = {
-                                    user: {
+                                    role: {
                                         Id: 0,
-                                        Account: '',
-                                        RealName: '',
-                                        MobilePhone: '',
-                                        Gender: null,
-                                        Nation: -1,
-                                        CardId: '',
-                                        Birthday: '',
-                                        Address: '',
+                                        RoleName: '',
+                                        EnCode: '',
+                                        Type: -1,
+                                        SortCode: 1,
+                                        IsEnableed: true,
                                         Remark: ''
                                     },
-                                    Nations: staticData.nations
+                                    Types: staticData.types
                                 };
                                 //渲染
                                 laytpl($('#edit-tpl').html()).render(d,
                                     function (html) {
                                         layer.open({
                                             type: 1,
-                                            title: '新增用户信息',
+                                            title: '新增角色信息',
                                             content: html,
-                                            area: ['80%', '85%'],
+                                            area: ['80%', '65%'],
                                             btn: ['提交', '重置', '取消'],
                                             yes: function (index, layero) {
                                                 editIndex = index;
@@ -437,11 +348,6 @@
                                                 return false;
                                             },
                                             success: function () {
-
-
-                                                laydate.render({
-                                                    elem: '#Birthday'
-                                                });
                                                 form.render(null, 'form-edit');
                                             }
                                         });
@@ -452,52 +358,13 @@
             });
 
         var staticData = {
-            citys: [
+            types: [
                 {
-                    id: 0,
-                    name: '北京'
-                }, {
                     id: 1,
-                    name: '广州'
+                    name: '系统类型'
                 }, {
                     id: 2,
-                    name: '深圳'
-                }, {
-                    id: 3,
-                    name: '杭州'
-                }
-            ],
-            classifies: [
-                {
-                    id: 0,
-                    name: '词人'
-                }, {
-                    id: 1,
-                    name: '诗人'
-                }, {
-                    id: 2,
-                    name: '作家'
-                }, {
-                    id: 3,
-                    name: '酱油'
-                }
-            ],
-            nations: [
-                {
-                    id: 0,
-                    name: '汉族'
-                },
-                {
-                    id: 2,
-                    name: '回族'
-                },
-                {
-                    id: 3,
-                    name: '壮族'
-                },
-                {
-                    id: 4,
-                    name: '蒙古族'
+                    name: '业务类型'
                 }
             ]
         };

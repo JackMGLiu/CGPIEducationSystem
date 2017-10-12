@@ -18,11 +18,13 @@ namespace CGPI.Web.Areas.Manager.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ISysUserService _sysUserService;
+        private readonly ISysRoleService _sysRoleService;
 
-        public DemoController(IMapper mapper, ISysUserService sysUserService)
+        public DemoController(IMapper mapper, ISysUserService sysUserService, ISysRoleService sysRoleService)
         {
             this._mapper = mapper;
             this._sysUserService = sysUserService;
+            this._sysRoleService = sysRoleService;
         }
 
         public IActionResult Index()
@@ -35,6 +37,8 @@ namespace CGPI.Web.Areas.Manager.Controllers
         {
             return View();
         }
+
+        #region demo user
 
         [HttpGet("demo/users")]
         public IActionResult Users()
@@ -104,6 +108,58 @@ namespace CGPI.Web.Areas.Manager.Controllers
             }
         }
 
+        #endregion
+
+        #region demo role
+
+        [HttpGet("demo/roles")]
+        public IActionResult Roles()
+        {
+            return View();
+        }
+
+        [HttpPost("demo/getroles")]
+        public IActionResult RoleData(string keyword, int page, int limit)
+        {
+            var res = _sysRoleService.GetPagedList(keyword, page, limit);
+            var roledata = _mapper.Map<List<SysRoleViewModel>>(res.Items);
+            var json = new { code = 0, msg = "", count = res.TotalCount, data = roledata };
+            return Content(json.ToJson());
+        }
+
+        [HttpPost("demo/saverole")]
+        public IActionResult SaveData(SysRole model)
+        {
+            if (model.Id == 0 || model.Id.IsEmpty())
+            {
+                //add
+                var res = _sysRoleService.AddRole(model);
+                if (res)
+                {
+                    return Success();
+                }
+                else
+                {
+                    return Error();
+                }
+            }
+            else
+            {
+                //edit
+                var res = _sysRoleService.EditRole(model);
+                if (res)
+                {
+                    return Success();
+                }
+                else
+                {
+                    return Error();
+                }
+            }
+        }
+
+        #endregion
+
         [HttpGet("demo/count")]
         public IActionResult UserCount()
         {
@@ -128,7 +184,7 @@ namespace CGPI.Web.Areas.Manager.Controllers
                         {
                             id = 10001,
                             title = "用户管理",
-                            icon = "fa-users",
+                            icon = "fa-user",
                             url = "/demo/users"
                         },
                         new MenuModel

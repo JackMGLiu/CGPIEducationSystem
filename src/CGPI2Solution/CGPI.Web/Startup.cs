@@ -85,6 +85,7 @@ namespace CGPI.Web
             services.AddSingleton<IMapper>(sp => _mapperConfiguration.CreateMapper());
 
             services.AddScoped<ISysUserService, SysUserService>();
+            services.AddScoped<ISysRoleService, SysRoleService>();
 
             return services;
         }
