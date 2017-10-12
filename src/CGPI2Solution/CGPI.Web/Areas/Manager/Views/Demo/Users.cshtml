@@ -386,7 +386,9 @@
                                             $('#MobilePhone').removeAttr('lay-verify').attr('disabled', true).addClass('layui-disabled');
 
                                             laydate.render({
-                                                elem: '#Birthday'
+                                                elem: '#Birthday',
+                                                value: data.Birthday,
+                                                format: 'yyyy-MM-dd'
                                             });
                                             form.render(null, 'form-edit');
                                         }

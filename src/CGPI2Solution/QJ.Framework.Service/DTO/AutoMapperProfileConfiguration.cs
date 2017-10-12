@@ -12,6 +12,7 @@ namespace QJ.Framework.Service.DTO
 
             //用户信息
             CreateMap<SysUser, SysUserViewModel>();
+                //.ForMember(dest => dest.Birthday, opt => opt.MapFrom(src => src.Birthday.Value.ToString("yy-MM-dd")));
             CreateMap<SysUserViewModel, SysUser>();
 
             //人员api

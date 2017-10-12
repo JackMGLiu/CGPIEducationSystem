@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using QJ.Framework.Infrastructure.FormatModels;
 
 namespace QJ.Framework.Service.DTO.ViewModels
 {
@@ -16,6 +19,7 @@ namespace QJ.Framework.Service.DTO.ViewModels
 
         public bool? Gender { get; set; }
 
+        [JsonConverter(typeof(JsonDateFormat))]
         public DateTime? Birthday { get; set; }
 
         public string MobilePhone { get; set; }

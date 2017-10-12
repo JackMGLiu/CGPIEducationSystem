@@ -61,7 +61,7 @@ namespace QJ.Framework.Service.Impl
                     user.Address = model.Address;
                     user.Remark = model.Remark;
                     user.ModifyTime = DateTime.Now;
-                    user.CreateUser = "testmanager";
+                    user.ModifyUser = "testmanager";
                     _sysuseRepository.Update(user);
                     bool res = _unitOfWork.SaveChanges() > 0;
                     return res;
