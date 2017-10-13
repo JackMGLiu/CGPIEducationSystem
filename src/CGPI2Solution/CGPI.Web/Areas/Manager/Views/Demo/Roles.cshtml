@@ -57,6 +57,8 @@
     <div class="kit-table-body">
         <table id="roles" lay-filter="roles"></table>
         <script type="text/html" id="rowtools">
+            <a class="layui-btn layui-btn-mini" lay-event="roleusers">角色授权</a>
+            <a class="layui-btn layui-btn-mini" lay-event="rolemenus">角色权限</a>
             <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
             <a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
             <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
@@ -104,7 +106,7 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">排序：</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="SortCode" name="SortCode" value="{{d.role.SortCode}}" lay-verify="number" autocomplete="off" class="layui-input">
+                            <input type="number" id="SortCode" name="SortCode" value="{{d.role.SortCode}}" lay-verify="number" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-inline">
@@ -199,7 +201,7 @@
                             }, {
                                 fixed: 'right',
                                 title: '操作',
-                                width: 200,
+                                width: 325,
                                 align: 'center',
                                 toolbar: '#rowtools'
                             }

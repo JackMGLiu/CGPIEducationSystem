@@ -3,7 +3,7 @@
  * @param {String} content 
  * @param {String} type 
  */
-$.layerMsg = function(content, type, callback) {
+$.layerMsg = function (content, type, callback) {
     //debugger;
     if (type != undefined) {
         var icon = "";
@@ -21,14 +21,14 @@ $.layerMsg = function(content, type, callback) {
         }
         top.layer.msg(content,
             { icon: icon, time: 2000 },
-            function() {
+            function () {
                 if (callback && $.isFunction(callback)) {
                     callback();
                 }
             });
     } else {
         top.layer.msg(content,
-            function() {
+            function () {
                 if (callback && $.isFunction(callback)) {
                     callback();
                 }
@@ -50,7 +50,7 @@ $.getQueryString = function (name) {
  * 绑定Select选项。
  * @param {Object} options
  */
-$.fn.bindSelect = function(options) {
+$.fn.bindSelect = function (options) {
     var defaults = {
         id: "id",
         text: "text",
@@ -70,9 +70,9 @@ $.fn.bindSelect = function(options) {
             type: "post",
             dataType: "json",
             async: false,
-            success: function(data) {
+            success: function (data) {
                 $.each(data,
-                    function(i) {
+                    function (i) {
                         $element.append($("<option></option>").val(data[i][options.id]).html(data[i][options.text]));
                     });
                 $element.select2({
@@ -81,7 +81,7 @@ $.fn.bindSelect = function(options) {
                     minimumResultsForSearch: options.search == true ? 0 : -1
                 });
                 $element.on("change",
-                    function(e) {
+                    function (e) {
                         if (options.change != null) {
                             options.change(data[$(this).find("option:selected").index()]);
                         }
@@ -101,12 +101,12 @@ $.fn.bindSelect = function(options) {
  * 绑定Enter提交事件。
  * @param {Object} $event 需要触发的元素或事件。
  */
-$.fn.bindEnterEvent = function($event) {
+$.fn.bindEnterEvent = function ($event) {
     var $selector = $(this);
     $.each($selector,
-        function() {
+        function () {
             $(this).unbind("keydown").bind("keydown",
-                function(event) {
+                function (event) {
                     if (event.keyCode == 13) {
                         if ($.isFunction($event)) {
                             $event();
@@ -123,27 +123,27 @@ $.fn.bindEnterEvent = function($event) {
  * @param {Object} $event 需要触发的元素或事件。
  * 
  */
-$.fn.bindChangeEvent = function($event) {
-    var $selector = $(this);
-    $.each($selector,
-        function() {
-            $(this).unbind("change").bind("change",
-                function(event) {
-                    if ($.isFunction($event)) {
-                        $event();
-                    } else {
-                        $event.click();
-                    }
-                });
-        });
-};
+//$.fn.bindChangeEvent = function ($event) {
+//    var $selector = $(this);
+//    $.each($selector,
+//        function () {
+//            $(this).unbind("change").bind("change",
+//                function (event) {
+//                    if ($.isFunction($event)) {
+//                        $event();
+//                    } else {
+//                        $event.click();
+//                    }
+//                });
+//        });
+//};
 
 /**
  * 提交表单。
  * @param {Object} options
  */
 var msgloading;
-$.formSubmit = function(options) {
+$.formSubmit = function (options) {
     var defaults = {
         url: "",
         data: {},
@@ -152,7 +152,7 @@ $.formSubmit = function(options) {
         success: null,
         close: true,
         showMsg: true,
-        winindex:''
+        winindex: ''
     };
     var options = $.extend(defaults, options);
     $.ajax({
@@ -161,7 +161,7 @@ $.formSubmit = function(options) {
         type: options.type,
         async: options.async,
         dataType: "json",
-        success: function(data) {
+        success: function (data) {
             if (options.success && $.isFunction(options.success)) {
                 options.success(data);
             }
@@ -173,18 +173,18 @@ $.formSubmit = function(options) {
                 $.layerMsg(data.message, data.state);
             }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             top.layer.close(msgloading);
             $.layerMsg(error, "error");
         },
-        beforeSend: function() {
+        beforeSend: function () {
             msgloading = top.layer.msg('正在执行操作，请稍后...',
-            {
-                icon: 16,
-                shade: 0.01
-            });
+                {
+                    icon: 16,
+                    shade: 0.01
+                });
         },
-        complete: function() {
+        complete: function () {
             top.layer.close(msgloading);
         }
     });

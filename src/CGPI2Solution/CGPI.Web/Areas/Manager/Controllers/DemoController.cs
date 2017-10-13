@@ -28,6 +28,17 @@ namespace CGPI.Web.Areas.Manager.Controllers
             this._sysRoleService = sysRoleService;
         }
 
+        #region login
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        #endregion
+
+
         public IActionResult Index()
         {
             return View();

@@ -71,7 +71,7 @@ namespace CGPI.Web
             {
                 routes.MapRoute(
                     name: "area",
-                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                    template: "{area:exists}/{controller=Demo}/{action=Login}/{id?}");
 
                 routes.MapRoute(
                     name: "default",
