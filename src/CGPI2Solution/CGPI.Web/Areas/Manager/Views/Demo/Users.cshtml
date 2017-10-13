@@ -2,6 +2,11 @@
 @{
     ViewData["Title"] = "测试用户管理";
 }
+@section managerstyles
+    {
+
+    <link href="~/framework/select2/css/select2.css" rel="stylesheet" />
+}
 <div class="kit-table">
     <form class="layui-form" lay-filter="kit-search-form">
         <div class="kit-table-header">
@@ -118,8 +123,14 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">出生日期：</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="Birthday" name="Birthday" value="{{d.user.Birthday}}" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                            <input type="text" id="Birthday" name="Birthday" value="{{d.user.Birthday}}" placeholder="yyyy-MM-dd" autocomplete="off" readonly="readonly" class="layui-input">
                         </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">所属角色：</label>
+                    <div class="layui-input-block">
+                        <select lay-ignore name="Role" id="Role" class="select2" multiple="multiple" style="width: 100%;"></select>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -168,6 +179,10 @@
                     laytpl = layui.laytpl,
                     laydate = layui.laydate;
 
+                //$("#RoleId").bindSelect({
+                //    url: "/role/roletree",
+                //    title: '请选择角色'
+                //});
                 form.verify({
                     accisexist: function (value, item) {
                         var status, msg = '';
@@ -437,12 +452,17 @@
                                                 return false;
                                             },
                                             success: function () {
-
+                                                $("#Role").bindSelect({
+                                                    url: "/role/roletree",
+                                                    title: '请选择用户角色'
+                                                });
 
                                                 laydate.render({
                                                     elem: '#Birthday'
                                                 });
+
                                                 form.render(null, 'form-edit');
+
                                             }
                                         });
                                     });

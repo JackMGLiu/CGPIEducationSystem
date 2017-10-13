@@ -6,6 +6,7 @@ using AutoMapper;
 using CGPI.Web.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using QJ.Framework.Entity.Entities.System;
+using QJ.Framework.Infrastructure.FormatModels;
 using QJ.Framework.Infrastructure.Json;
 using QJ.Framework.Infrastructure.Validate;
 using QJ.Framework.Service.DTO.ViewModels;
@@ -125,6 +126,25 @@ namespace CGPI.Web.Areas.Manager.Controllers
             var roledata = _mapper.Map<List<SysRoleViewModel>>(res.Items);
             var json = new { code = 0, msg = "", count = res.TotalCount, data = roledata };
             return Content(json.ToJson());
+        }
+
+        /// <summary>
+        /// 获取角色数
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("role/roletree")]
+        public IActionResult GetRoleTreeSelect()
+        {
+            var rolelist = _sysRoleService.GetSysRoleList();
+            var listTree = new List<TreeSelect>();
+            foreach (var item in rolelist)
+            {
+                TreeSelect model = new TreeSelect();
+                model.id = item.Id.ToString();
+                model.text = item.RoleName;
+                listTree.Add(model);
+            }
+            return Content(listTree.ToJson());
         }
 
         [HttpPost("demo/saverole")]

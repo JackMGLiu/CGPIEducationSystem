@@ -37,6 +37,108 @@ $.layerMsg = function(content, type, callback) {
 };
 
 /**
+ * 获取URL指定参数值。
+ * @param {String} name
+ */
+$.getQueryString = function (name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]); return null;
+}
+
+/**
+ * 绑定Select选项。
+ * @param {Object} options
+ */
+$.fn.bindSelect = function(options) {
+    var defaults = {
+        id: "id",
+        text: "text",
+        search: true,
+        //multiple: false,
+        title: "请选择",
+        url: "",
+        param: [],
+        change: null
+    };
+    var options = $.extend(defaults, options);
+    var $element = $(this);
+    if (options.url != "") {
+        $.ajax({
+            url: options.url,
+            data: options.param,
+            type: "post",
+            dataType: "json",
+            async: false,
+            success: function(data) {
+                $.each(data,
+                    function(i) {
+                        $element.append($("<option></option>").val(data[i][options.id]).html(data[i][options.text]));
+                    });
+                $element.select2({
+                    placeholder: options.title,
+                    //multiple: options.multiple,
+                    minimumResultsForSearch: options.search == true ? 0 : -1
+                });
+                $element.on("change",
+                    function(e) {
+                        if (options.change != null) {
+                            options.change(data[$(this).find("option:selected").index()]);
+                        }
+                        $("#select2-" + $element.attr('id') + "-container")
+                            .html($(this).find("option:selected").text().replace(/　　/g, ''));
+                    });
+            }
+        });
+    } else {
+        $element.select2({
+            minimumResultsForSearch: -1
+        });
+    }
+};
+
+/**
+ * 绑定Enter提交事件。
+ * @param {Object} $event 需要触发的元素或事件。
+ */
+$.fn.bindEnterEvent = function($event) {
+    var $selector = $(this);
+    $.each($selector,
+        function() {
+            $(this).unbind("keydown").bind("keydown",
+                function(event) {
+                    if (event.keyCode == 13) {
+                        if ($.isFunction($event)) {
+                            $event();
+                        } else {
+                            $event.click();
+                        }
+                    }
+                });
+        });
+};
+
+/**
+ * 绑定Change提交事件。
+ * @param {Object} $event 需要触发的元素或事件。
+ * 
+ */
+$.fn.bindChangeEvent = function($event) {
+    var $selector = $(this);
+    $.each($selector,
+        function() {
+            $(this).unbind("change").bind("change",
+                function(event) {
+                    if ($.isFunction($event)) {
+                        $event();
+                    } else {
+                        $event.click();
+                    }
+                });
+        });
+};
+
+/**
  * 提交表单。
  * @param {Object} options
  */
