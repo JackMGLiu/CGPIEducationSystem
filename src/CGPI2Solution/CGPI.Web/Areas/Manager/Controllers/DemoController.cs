@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using CGPI.Web.Controllers;
+using CGPI.Web.Framework;
 using Microsoft.AspNetCore.Mvc;
 using QJ.Framework.Entity.Entities.System;
 using QJ.Framework.Infrastructure.FormatModels;
@@ -38,7 +39,7 @@ namespace CGPI.Web.Areas.Manager.Controllers
 
         #endregion
 
-
+        [AdminAuthorize]
         public IActionResult Index()
         {
             return View();

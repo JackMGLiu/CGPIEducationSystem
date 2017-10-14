@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -83,6 +84,7 @@ namespace CGPI.Web
         {
             //AutoMapper
             services.AddSingleton<IMapper>(sp => _mapperConfiguration.CreateMapper());
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();//用于获取请求上下文
 
             services.AddScoped<ISysUserService, SysUserService>();
             services.AddScoped<ISysRoleService, SysRoleService>();

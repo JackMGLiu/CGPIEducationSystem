@@ -5,6 +5,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using QJ.Framework.Entity.Entities.System;
+using QJ.Framework.Infrastructure.Security;
 using QJ.Framework.Infrastructure.Validate;
 using QJ.Framework.Service.DTO;
 using QJ.Framework.Service.DTO.ViewModels;
@@ -141,6 +142,7 @@ namespace QJ.Framework.Service.Impl
                         {
                             current.LastLoginTime = DateTime.Now;
                             current.LogOnCount = current.LogOnCount.HasValue ? (current.LogOnCount.Value) + 1 : 1;
+                            _sysuseRepository.Update(current);
                             _unitOfWork.SaveChanges();
                             loginModel = _mapper.Map<UserLoginModel>(current);
                             flag = true;
@@ -168,6 +170,16 @@ namespace QJ.Framework.Service.Impl
             {
                 throw e;
             }
+        }
+
+        public string LoginEncrypt(string encryptString, string encryptKey)
+        {
+            return SecurityHelper.EncryptDES(encryptString, encryptKey);
+        }
+
+        public string LoginDecrypt(string decryptString, string encryptKey)
+        {
+            return SecurityHelper.DecryptDES(decryptString, encryptKey);
         }
     }
 }

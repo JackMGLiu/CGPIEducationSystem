@@ -115,7 +115,9 @@
             </form>
         </div>
     </div>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/framework/layui/layui.js"></script>
+    <script src="~/framework/js/global.js"></script>
     <script>
         layui.use(['layer', 'form'],
             function () {
@@ -148,12 +150,10 @@
                         },
                         success: function (result) {
                             if (result.state == 1) {
-                                window.location.href = result.data.backurl;
-                                $(".btn-submit").html(result.message);
+                                $.layerMsg(result.message, result.state, function () { window.location.href = result.data.backurl; });
+                                $("#loginbtn").attr('disabled', false).removeClass('layui-disabled');
                             } else {
-                                $(".btn-submit").html("立即登录");
-                                $(".btn-submit").attr('disabled', false).removeClass('layui-disabled');
-                                $("#verifyCode").trigger('click');
+                                $("#loginbtn").attr('disabled', false).removeClass('layui-disabled');
                                 $.layerMsg(result.message, result.state);
                             }
                         }
