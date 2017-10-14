@@ -5,11 +5,34 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CGPI.Web.Models;
+using QJ.Framework.Service.DTO.RequestViewModels;
 
 namespace CGPI.Web.Controllers
 {
     public class HomeController : Controller
     {
+        #region login
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost("account/checklogin")]
+        public IActionResult Login(AccountModel model)
+        {
+            //验证模型是否正确
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            return View();
+        }
+
+        #endregion
+
+
         public IActionResult Index()
         {
             return View();

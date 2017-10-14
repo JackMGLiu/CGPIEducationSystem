@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00Infrastructure", "00Infrastructure", "{C04D88FE-85F4-4499-BF76-9D96489B45B8}"
 EndProject
@@ -11,13 +11,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02Service", "02Service", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03Web", "03Web", "{CF8A5237-4CB7-46C9-B5F5-63FB72E16265}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QJ.Framework.Infrastructure", "QJ.Framework.Infrastructure\QJ.Framework.Infrastructure.csproj", "{11F65A64-1C5F-4AB3-B7DA-D57F631D9696}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QJ.Framework.Infrastructure", "QJ.Framework.Infrastructure\QJ.Framework.Infrastructure.csproj", "{11F65A64-1C5F-4AB3-B7DA-D57F631D9696}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QJ.Framework.Entity", "QJ.Framework.Entity\QJ.Framework.Entity.csproj", "{78EF0A2A-3035-43C0-AD20-9BB6AB181734}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QJ.Framework.Entity", "QJ.Framework.Entity\QJ.Framework.Entity.csproj", "{78EF0A2A-3035-43C0-AD20-9BB6AB181734}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QJ.Framework.Service", "QJ.Framework.Service\QJ.Framework.Service.csproj", "{D7AFFB2D-2D6E-4F49-89AF-7B7F45A4B4ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QJ.Framework.Service", "QJ.Framework.Service\QJ.Framework.Service.csproj", "{D7AFFB2D-2D6E-4F49-89AF-7B7F45A4B4ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CGPI.Web", "CGPI.Web\CGPI.Web.csproj", "{8782C1CC-AD75-4531-BBD0-ADB4369B7057}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CGPI.Web", "CGPI.Web\CGPI.Web.csproj", "{8782C1CC-AD75-4531-BBD0-ADB4369B7057}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo", "Demo", "{D9549761-1FFE-4BFC-8E02-D2B62FDB7BE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.Demo", "Web.Demo\Web.Demo.csproj", "{9C71F4D5-8302-4C57-8DE7-BEAE9D75BDC7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +45,10 @@ Global
 		{8782C1CC-AD75-4531-BBD0-ADB4369B7057}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8782C1CC-AD75-4531-BBD0-ADB4369B7057}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8782C1CC-AD75-4531-BBD0-ADB4369B7057}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C71F4D5-8302-4C57-8DE7-BEAE9D75BDC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C71F4D5-8302-4C57-8DE7-BEAE9D75BDC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C71F4D5-8302-4C57-8DE7-BEAE9D75BDC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C71F4D5-8302-4C57-8DE7-BEAE9D75BDC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +58,7 @@ Global
 		{78EF0A2A-3035-43C0-AD20-9BB6AB181734} = {5468562A-6911-45C3-8A0F-7607802E2F7B}
 		{D7AFFB2D-2D6E-4F49-89AF-7B7F45A4B4ED} = {185E401E-6EED-4D2B-A987-9412A83F94A1}
 		{8782C1CC-AD75-4531-BBD0-ADB4369B7057} = {CF8A5237-4CB7-46C9-B5F5-63FB72E16265}
+		{9C71F4D5-8302-4C57-8DE7-BEAE9D75BDC7} = {D9549761-1FFE-4BFC-8E02-D2B62FDB7BE5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B46CFC21-10C1-4651-B02F-95902A900B1C}

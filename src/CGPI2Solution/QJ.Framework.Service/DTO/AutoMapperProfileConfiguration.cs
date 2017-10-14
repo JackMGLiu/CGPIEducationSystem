@@ -14,6 +14,13 @@ namespace QJ.Framework.Service.DTO
             CreateMap<SysUser, SysUserViewModel>();
             CreateMap<SysUserViewModel, SysUser>();
 
+            //用户登陆信息
+            CreateMap<SysUser, UserLoginModel>()
+                .ForMember(dest => dest.userId, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Token, opt => opt.MapFrom(src => src.Secretkey))
+                .ForMember(dest => dest.LoginTime, opt => opt.MapFrom(src => src.LastLoginTime));
+            CreateMap<UserLoginModel, SysUser>();
+
             //人员api
             //CreateMap<SysUser, UserModel>()
             //    .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id))

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using QJ.Framework.Entity.Entities.System;
 using QJ.Framework.Infrastructure.Validate;
+using QJ.Framework.Service.DTO;
 using QJ.Framework.Service.DTO.ViewModels;
 using QJ.Framework.Service.Interface;
 
@@ -14,12 +15,14 @@ namespace QJ.Framework.Service.Impl
     public class SysUserService : ISysUserService
     {
         private readonly IConfiguration _config;
+        private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private IRepository<SysUser> _sysuseRepository;
 
-        public SysUserService(IConfiguration config, IUnitOfWork unitOfWork)
+        public SysUserService(IConfiguration config, IMapper mapper, IUnitOfWork unitOfWork)
         {
             this._config = config;
+            this._mapper = mapper;
             this._unitOfWork = unitOfWork;
             _sysuseRepository = this._unitOfWork.GetRepository<SysUser>();
         }
@@ -117,6 +120,49 @@ namespace QJ.Framework.Service.Impl
             {
                 var res = _sysuseRepository.Count(m => m.MobilePhone == mobile) > 0;
                 return res;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public bool Login(string account, string userPass, out UserLoginModel loginModel)
+        {
+            try
+            {
+                bool flag = false;
+                var current = _sysuseRepository.GetFirstOrDefault(predicate: u => u.Account == account && u.IsDeleted == false);
+                if (!current.IsEmpty())
+                {
+                    if (current.IsEnableed)
+                    {
+                        if (current.Password == userPass.ToMd5())
+                        {
+                            current.LastLoginTime = DateTime.Now;
+                            current.LogOnCount = current.LogOnCount.HasValue ? (current.LogOnCount.Value) + 1 : 1;
+                            _unitOfWork.SaveChanges();
+                            loginModel = _mapper.Map<UserLoginModel>(current);
+                            flag = true;
+                        }
+                        else
+                        {
+                            loginModel = null;
+                            flag = false;
+                        }
+                    }
+                    else
+                    {
+                        loginModel = null;
+                        flag = false;
+                    }
+                }
+                else
+                {
+                    loginModel = null;
+                    flag = false;
+                }
+                return flag;
             }
             catch (Exception e)
             {

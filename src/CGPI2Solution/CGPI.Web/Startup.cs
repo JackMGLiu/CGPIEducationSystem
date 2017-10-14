@@ -71,11 +71,11 @@ namespace CGPI.Web
             {
                 routes.MapRoute(
                     name: "area",
-                    template: "{area:exists}/{controller=Demo}/{action=Login}/{id?}");
+                    template: "{area:exists}/{controller=Demo}/{action=Index}/{id?}");
 
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Login}/{id?}");
             });
         }
 
