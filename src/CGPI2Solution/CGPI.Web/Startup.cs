@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using CGPI.Web.Application;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -78,6 +79,8 @@ namespace CGPI.Web
                     name: "default",
                     template: "{controller=Home}/{action=Login}/{id?}");
             });
+
+            ServiceLocator.Instance = app.ApplicationServices;
         }
 
         private IServiceCollection AddDependencies(IServiceCollection services)
@@ -88,6 +91,8 @@ namespace CGPI.Web
 
             services.AddScoped<ISysUserService, SysUserService>();
             services.AddScoped<ISysRoleService, SysRoleService>();
+
+            services.AddTransient<IUserService, UserService>();
 
             return services;
         }

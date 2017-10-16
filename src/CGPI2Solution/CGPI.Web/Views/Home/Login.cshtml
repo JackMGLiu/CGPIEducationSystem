@@ -121,7 +121,6 @@
     <script>
         layui.use(['layer', 'form'],
             function () {
-                var $ = layui.jquery;
                 var layer = layui.layer;
                 var form = layui.form;
 
@@ -129,7 +128,6 @@
 
                 //submit
                 form.on('submit(login)', function (data) {
-                    console.log(data);
                     $("#loginbtn").attr('disabled', true).addClass('layui-disabled');
                     $.ajax({
                         async: false,

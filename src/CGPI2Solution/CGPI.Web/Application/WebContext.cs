@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using QJ.Framework.Infrastructure.Security;
 using QJ.Framework.Infrastructure.Validate;
+using QJ.Framework.Service.Impl;
 using QJ.Framework.Service.Interface;
 
 namespace CGPI.Web.Application
@@ -13,6 +15,39 @@ namespace CGPI.Web.Application
     {
         public static IServiceProvider Instance { get; set; }
         public static T GetService<T>() where T : class => Instance.GetService<T>();
+    }
+
+    public interface IUserService
+    {
+
+        /// <summary>
+        /// 登录时使用的加密方法
+        /// </summary>
+        /// <param name="encryptString"></param>
+        /// <param name="encryptKey"></param>
+        /// <returns></returns>
+        string LoginEncrypt(string encryptString, string encryptKey);
+
+        /// <summary>
+        /// 登录时使用的解密方法
+        /// </summary>
+        /// <param name="decryptString"></param>
+        /// <param name="encryptKey"></param>
+        /// <returns></returns>
+        string LoginDecrypt(string decryptString, string encryptKey);
+    }
+
+    public class UserService:IUserService
+    {
+        public string LoginEncrypt(string encryptString, string encryptKey)
+        {
+            return SecurityHelper.EncryptDES(encryptString, encryptKey);
+        }
+
+        public string LoginDecrypt(string decryptString, string encryptKey)
+        {
+            return SecurityHelper.DecryptDES(decryptString, encryptKey);
+        }
     }
 
     public static class WebContext
@@ -30,7 +65,7 @@ namespace CGPI.Web.Application
                 {
                     return null;
                 }
-                var loginname = ServiceLocator.GetService<ISysUserService>().LoginDecrypt(encryptValue, ApplicationKeys.User_Cookie_EncryptionKey);
+                var loginname = ServiceLocator.GetService<IUserService>().LoginDecrypt(encryptValue, ApplicationKeys.User_Cookie_EncryptionKey);
                 return loginname;
             }
         }

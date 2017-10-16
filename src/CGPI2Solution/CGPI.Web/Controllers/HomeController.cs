@@ -15,7 +15,7 @@ namespace CGPI.Web.Controllers
     public class HomeController : BaseController
     {
         private readonly ISysUserService _sysUserService;
-            
+
         public HomeController(ISysUserService sysUserService)
         {
             this._sysUserService = sysUserService;
@@ -30,7 +30,7 @@ namespace CGPI.Web.Controllers
         }
 
         [HttpPost("account/checklogin")]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public IActionResult Login(AccountModel model)
         {
             //验证模型是否正确
@@ -45,7 +45,7 @@ namespace CGPI.Web.Controllers
             if (res)
             {
                 //加密用户名写入cookie中，AdminAuthorizeAttribute特性标记取出cookie并解码除用户名
-                var encryptValue = _sysUserService.LoginEncrypt(model.Account, ApplicationKeys.User_Cookie_EncryptionKey);
+                var encryptValue = ServiceLocator.GetService<IUserService>().LoginEncrypt(model.Account, ApplicationKeys.User_Cookie_EncryptionKey);
                 //保存cookie
                 HttpContext.Response.Cookies.Append(ApplicationKeys.User_Cookie_Key, encryptValue);
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +7,6 @@ using QJ.Framework.Entity.Entities.System;
 using QJ.Framework.Infrastructure.Security;
 using QJ.Framework.Infrastructure.Validate;
 using QJ.Framework.Service.DTO;
-using QJ.Framework.Service.DTO.ViewModels;
 using QJ.Framework.Service.Interface;
 
 namespace QJ.Framework.Service.Impl
@@ -25,7 +23,7 @@ namespace QJ.Framework.Service.Impl
             this._config = config;
             this._mapper = mapper;
             this._unitOfWork = unitOfWork;
-            _sysuseRepository = this._unitOfWork.GetRepository<SysUser>();
+            this._sysuseRepository = _unitOfWork.GetRepository<SysUser>();
         }
 
         public bool AddUser(SysUser model)
@@ -170,16 +168,6 @@ namespace QJ.Framework.Service.Impl
             {
                 throw e;
             }
-        }
-
-        public string LoginEncrypt(string encryptString, string encryptKey)
-        {
-            return SecurityHelper.EncryptDES(encryptString, encryptKey);
-        }
-
-        public string LoginDecrypt(string decryptString, string encryptKey)
-        {
-            return SecurityHelper.DecryptDES(decryptString, encryptKey);
         }
     }
 }
