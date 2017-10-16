@@ -11,9 +11,10 @@ using System;
 namespace CGPI.Web.Migrations
 {
     [DbContext(typeof(CGPIDbContext))]
-    partial class CGPIDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171016060957_2017101701")]
+    partial class _2017101701
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
