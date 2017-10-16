@@ -102,7 +102,6 @@ namespace QJ.Framework.Service.Impl
                             ur.RoleId = current.Id;
                             ur.UserId = uid;
                             ur.CreateUser = "testadmin";
-                            current.UserRoles.Add(ur);
                             rusers.Add(ur);
                         }
                         if (current.UserRoles.Any())
