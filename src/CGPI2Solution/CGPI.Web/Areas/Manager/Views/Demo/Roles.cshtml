@@ -264,6 +264,42 @@
                         if (layEvent === 'detail') { //查看
                             layer.msg(JSON.stringify(data));
                             //do somehing
+                        } else if (layEvent === 'roleusers') {
+                            var roleload;
+                            var roleid = data.Id;
+                            $.ajax({
+                                url: '/role/getroleusers',
+                                data: { 'roleid': roleid },
+                                type: 'get',
+                                async: false,
+                                dataType: "json",
+                                success: function (data) {
+                                    var res = '';
+                                    if ($.isNullOrEmpty(data) || data.length===0) {
+                                        layer.msg('该角色暂无用户信息！');
+                                        return;
+                                    }
+                                    for (var i = 0; i < data.length; i++) {
+                                        res += data[i].RealName + ',';
+                                    }
+                                    layer.msg(res);
+                                },
+                                error: function (xhr, status, error) {
+                                    layer.close(roleload);
+                                    $.layerMsg(error, "error");
+                                },
+                                beforeSend: function () {
+                                    roleload = layer.msg('正在查询，请稍后...',
+                                        {
+                                            icon: 16,
+                                            shade: 0.01
+                                        });
+                                },
+                                complete: function () {
+                                    layer.close(roleload);
+                                }
+                            });
+
                         } else if (layEvent === 'del') { //删除
                             layer.confirm('确定要删除当前数据吗？',
                                 function (index) {

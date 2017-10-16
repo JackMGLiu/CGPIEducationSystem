@@ -15,12 +15,14 @@ namespace QJ.Framework.Service.Impl
         private readonly CGPIDbContext _dbContext;
         private readonly IUnitOfWork _unitOfWork;
         private IRepository<SysRole> _sysroleRepository;
+        private IRepository<SysUser> _sysuserRepository;
 
         public SysRoleService(CGPIDbContext dbContext, IUnitOfWork unitOfWork)
         {
             this._dbContext = dbContext;
             this._unitOfWork = unitOfWork;
             _sysroleRepository = this._unitOfWork.GetRepository<SysRole>();
+            _sysuserRepository = this._unitOfWork.GetRepository<SysUser>();
         }
 
         public bool AddRole(SysRole model)
@@ -138,6 +140,39 @@ namespace QJ.Framework.Service.Impl
                 flag = false;
             }
             return flag;
+        }
+
+        public List<SysUser> GetUsersByRoleId(int roleid)
+        {
+            try
+            {
+                if (!roleid.IsEmpty() && roleid > 0)
+                {
+                    var current =
+                        _sysroleRepository.GetFirstOrDefault(
+                            predicate: r => r.Id == roleid && r.IsEnableed && !r.IsDeleted,
+                            include: s => s.Include(rs => rs.UserRoles));
+                    if (!current.IsEmpty())
+                    {
+                        var users =
+                            _dbContext.SysUsers.Where(
+                                u => current.UserRoles.Select(ur => ur.UserId).Contains(u.Id));
+                        return users.ToList();
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }

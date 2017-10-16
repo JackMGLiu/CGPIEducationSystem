@@ -205,6 +205,14 @@ namespace CGPI.Web.Areas.Manager.Controllers
             }
         }
 
+        [HttpGet("role/getroleusers")]
+        public IActionResult GetUsersByRoleId(int roleid)
+        {
+            var users = _sysRoleService.GetUsersByRoleId(roleid);
+            var data = _mapper.Map<List<SysUserViewModel>>(users);
+            return Content(data.ToJson());
+        }
+
         #endregion
 
         [HttpGet("demo/count")]

@@ -14,6 +14,8 @@ namespace QJ.Framework.Service.Interface
 
         bool AddRoleUsers(int roleid, List<int> userids);
 
-        IPagedList<SysRole> GetPagedList(string keyword,int page, int pagesize);
+        List<SysUser> GetUsersByRoleId(int roleid);
+
+        IPagedList<SysRole> GetPagedList(string keyword, int page, int pagesize);
     }
 }
