@@ -158,6 +158,13 @@
             </form>
         </div>
     </script>
+    <script type="text/html" id="datanulltpl">
+        {{#  if($.isNullOrEmpty(d.EnCode)){ }}
+        <span style="color: #ff0023;">暂无</span>
+        {{#  } else { }}
+        <span>{{d.EnCode}}</span>
+        {{#  } }}
+    </script>
     <script type="text/html" id="gendertpl">
         {{#  if(d.Gender ==true){ }}
         <span style="color: #000;">男</span>
@@ -248,6 +255,7 @@
                             {
                                 field: 'EnCode',
                                 title: '工号',
+                                templet: '#datanulltpl',
                                 width: 110
                             },
                             {
@@ -409,52 +417,52 @@
                     });
 
                 $('.kit-search-btns').children('a').off('click').on('click',
-                    function() {
+                    function () {
                         var $that = $(this),
                             action = $that.data('action');
                         switch (action) {
-                        case 'add':
-                            var d = {
-                                user: {
-                                    Id: 0,
-                                    Account: '',
-                                    RealName: '',
-                                    MobilePhone: '',
-                                    Gender: null,
-                                    Nation: -1,
-                                    CardId: '',
-                                    Birthday: '',
-                                    Address: '',
-                                    Remark: ''
-                                },
-                                Nations: staticData.nations
-                            };
-                            //渲染
-                            laytpl($('#edit-tpl').html()).render(d,
-                                function(html) {
-                                    layer.open({
-                                        type: 1,
-                                        title: '新增用户信息',
-                                        content: html,
-                                        area: ['80%', '85%'],
-                                        btn: ['提交', '重置', '取消'],
-                                        yes: function(index, layero) {
-                                            editIndex = index;
-                                            $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
-                                        },
-                                        btn2: function(index, layero) {
-                                            $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
-                                            return false;
-                                        },
-                                        success: function() {
-                                            laydate.render({
-                                                elem: '#Birthday'
-                                            });
-                                            form.render(null, 'form-edit');
-                                        }
+                            case 'add':
+                                var d = {
+                                    user: {
+                                        Id: 0,
+                                        Account: '',
+                                        RealName: '',
+                                        MobilePhone: '',
+                                        Gender: null,
+                                        Nation: -1,
+                                        CardId: '',
+                                        Birthday: '',
+                                        Address: '',
+                                        Remark: ''
+                                    },
+                                    Nations: staticData.nations
+                                };
+                                //渲染
+                                laytpl($('#edit-tpl').html()).render(d,
+                                    function (html) {
+                                        layer.open({
+                                            type: 1,
+                                            title: '新增用户信息',
+                                            content: html,
+                                            area: ['80%', '85%'],
+                                            btn: ['提交', '重置', '取消'],
+                                            yes: function (index, layero) {
+                                                editIndex = index;
+                                                $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
+                                            },
+                                            btn2: function (index, layero) {
+                                                $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
+                                                return false;
+                                            },
+                                            success: function () {
+                                                laydate.render({
+                                                    elem: '#Birthday'
+                                                });
+                                                form.render(null, 'form-edit');
+                                            }
+                                        });
                                     });
-                                });
-                            break;
+                                break;
                         }
                     });
             });
