@@ -123,6 +123,7 @@ namespace QJ.Framework.Service.Impl
                         {
                             current.UserRoles.Clear();
                         }
+                        _sysroleRepository.Update(current);
                         _unitOfWork.SaveChanges();
                         flag = true;
                     }
