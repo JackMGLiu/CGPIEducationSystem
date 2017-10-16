@@ -190,6 +190,21 @@ namespace CGPI.Web.Areas.Manager.Controllers
             }
         }
 
+        public IActionResult AddRoleUsers()
+        {
+            var roleId = 2;
+            var userlist = new List<int> { 5, 8, 9, 10 };
+            var res = _sysRoleService.AddRoleUsers(roleId, userlist);
+            if (res)
+            {
+                return Content("okokok");
+            }
+            else
+            {
+                return Content("error");
+            }
+        }
+
         #endregion
 
         [HttpGet("demo/count")]

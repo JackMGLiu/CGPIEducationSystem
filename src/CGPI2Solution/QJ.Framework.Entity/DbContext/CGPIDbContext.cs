@@ -110,6 +110,13 @@ namespace QJ.Framework.Entity.DbContext
                 entity.Property(e => e.IsEnableed).HasDefaultValue(true);
                 entity.Property(e => e.CreateTime).HasDefaultValueSql("GETDATE()");
                 entity.Property(e => e.IsDeleted).HasDefaultValue(false);
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.UserRoles)
+                    .HasForeignKey(d => d.UserId);
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.UserRoles)
+                    .HasForeignKey(d => d.RoleId);
             });
 
             modelBuilder.Entity<UserAuthorize>().ToTable("UserAuthorize");

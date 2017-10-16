@@ -151,8 +151,8 @@
                                 $.layerMsg(result.message, result.state, function () { window.location.href = result.data.backurl; });
                                 $("#loginbtn").attr('disabled', false).removeClass('layui-disabled');
                             } else {
-                                $("#loginbtn").attr('disabled', false).removeClass('layui-disabled');
                                 $.layerMsg(result.message, result.state);
+                                $("#loginbtn").attr('disabled', false).removeClass('layui-disabled');
                             }
                         }
                     });

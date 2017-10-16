@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using QJ.Framework.Entity.DbContext;
@@ -15,7 +16,7 @@ namespace QJ.Framework.Service.Impl
         private readonly IUnitOfWork _unitOfWork;
         private IRepository<SysRole> _sysroleRepository;
 
-        public SysRoleService(CGPIDbContext dbContext,IUnitOfWork unitOfWork)
+        public SysRoleService(CGPIDbContext dbContext, IUnitOfWork unitOfWork)
         {
             this._dbContext = dbContext;
             this._unitOfWork = unitOfWork;
@@ -75,6 +76,67 @@ namespace QJ.Framework.Service.Impl
                         pageIndex: page - 1, pageSize: pagesize);
                 return data;
             }
+        }
+
+        public bool AddRoleUsers(int roleid, List<int> userids)
+        {
+            bool flag = false;
+            if (!roleid.IsEmpty() && roleid > 0)
+            {
+                var current =
+                    _sysroleRepository.GetFirstOrDefault(
+                        predicate: r => r.Id == roleid && r.IsEnableed && !r.IsDeleted,
+                        include: s => s.Include(rs => rs.UserRoles));
+                if (!current.IsEmpty())
+                {
+                    if (userids.Any())
+                    {
+                        var rusers = new List<UserRole>();
+                        UserRole ur = null;
+                        foreach (var uid in userids)
+                        {
+                            ur = new UserRole();
+                            ur.GuidCode = Guid.NewGuid().ToString("N");
+                            ur.RoleId = current.Id;
+                            ur.UserId = uid;
+                            ur.CreateUser = "testadmin";
+                            current.UserRoles.Add(ur);
+                            rusers.Add(ur);
+                        }
+                        if (current.UserRoles.Any())
+                        {
+                            current.UserRoles.Clear();
+                            current.UserRoles.AddRange(rusers);
+                        }
+                        else
+                        {
+                            current.UserRoles.AddRange(rusers);
+                        }
+                        _sysroleRepository.Update(current);
+                        _unitOfWork.SaveChanges();
+                        flag = true;
+                    }
+                    else
+                    {
+                        //清空当前角色用户
+                        if (current.UserRoles.Any())
+                        {
+                            current.UserRoles.Clear();
+                        }
+                        _unitOfWork.SaveChanges();
+                        flag = true;
+                    }
+                }
+                else
+                {
+                    flag = false;
+                }
+            }
+            else
+            {
+                flag = false;
+            }
+            return flag;
         }
     }
 }
